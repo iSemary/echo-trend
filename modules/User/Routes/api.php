@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use modules\Chats\Http\Controllers\Api\AuthController;
+use modules\User\Http\Controllers\Api\AuthController;
 
 /**
  *  Authentication Routes

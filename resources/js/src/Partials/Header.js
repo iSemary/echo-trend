@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     return (
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home">
+        <Navbar bg="dark" className="container" variant="dark">
+            <Link to="/" className="navbar-brand" aria-label="home">
                 {process.env.REACT_APP_NAME}
-            </Navbar.Brand>
-            <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#features">Features</Nav.Link>
+            </Link>
+            <Nav className="ml-auto">
+                <Link to="/today" className="nav-link" aria-label="login">
+                    What happened today
+                </Link>
+            </Nav>
+            <Nav className="ml-auto">
                 <Link to="/login" className="nav-link" aria-label="login">
                     Login
                 </Link>

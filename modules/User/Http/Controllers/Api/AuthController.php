@@ -1,16 +1,16 @@
 <?php
 
-namespace modules\Chats\Http\Controllers\Api;
+namespace modules\User\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
-use modules\Category\Entities\User;
 use modules\User\Http\Requests\LoginRequest;
 use modules\User\Http\Requests\RegisterRequest;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use modules\User\Entities\User;
 
 class AuthController extends ApiController {
     public function register(RegisterRequest $request): JsonResponse {

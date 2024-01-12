@@ -51,3 +51,22 @@ Full-stack web application built with PHP Laravel on the backend and React on th
 #### 4. Run application local
 
     php artisan serve
+
+
+### React Project
+
+#### 5. Navigate to react project 
+
+    cd resources/js
+
+#### 6. Install Dependencies 
+
+    npm i
+
+#### 7. Run Local
+
+    npm start
+
+#### 8. Watch SCSS Files
+
+    sass --watch resources/js/src/assets/styles/style.scss:resources/js/src/assets/styles/style.css

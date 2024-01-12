@@ -1,0 +1,22 @@
+footer {
+  background-color: #212529;
+  color: #fff; }
+  footer .social-list {
+    list-style: none;
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly; }
+    footer .social-list li a {
+      font-size: 25px;
+      color: #fff; }
+  footer .tags {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap; }
+    footer .tags a.tag {
+      text-decoration: none;
+      padding: 8px;
+      background-color: #dc3545;
+      color: #fff; }
+
+/*# sourceMappingURL=style.css.map */

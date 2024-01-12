@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -28,7 +29,9 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </Form.Group>
-
+            <Form.Group>
+                Already registered? <Link to="/login">Login now!</Link>
+            </Form.Group>
             <Button variant="primary" onClick={handleRegister}>
                 Register
             </Button>

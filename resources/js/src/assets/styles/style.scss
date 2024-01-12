@@ -1,0 +1,29 @@
+footer {
+    background-color: #212529;
+    color: #fff;
+    .social-list {
+        list-style: none;
+        display: flex;
+        text-align: center;
+        justify-content: space-evenly;
+
+        li {
+            a {
+                font-size: 25px;
+                color: #fff;
+            }
+        }
+    }
+
+    .tags {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        a.tag {
+            text-decoration: none;
+            padding: 8px;
+            background-color: #dc3545;
+            color: #fff;
+        }
+    }
+}

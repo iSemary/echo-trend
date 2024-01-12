@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -8,7 +9,7 @@ const Login = () => {
     const handleLogin = () => {};
 
     return (
-        <Form>
+        <Form method="POST">
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -27,6 +28,11 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+            </Form.Group>
+
+            <Form.Group>
+                Don't have an account?{" "}
+                <Link to="/register">let's register now!</Link>
             </Form.Group>
 
             <Button variant="primary" onClick={handleLogin}>
