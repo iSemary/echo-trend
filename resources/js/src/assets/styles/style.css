@@ -49,6 +49,14 @@ body {
   color: #f5f5f5;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.row > .form-floating label {
+  padding-left: 25px;
+}
+
 .form-control {
   color: #ced4da;
   background-color: #343a40;

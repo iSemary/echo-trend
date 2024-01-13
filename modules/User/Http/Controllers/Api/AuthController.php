@@ -133,4 +133,16 @@ class AuthController extends ApiController {
         }
         return $this->return(400, "Session expired");
     }
+
+    /**
+     * The function retrieves the authenticated user details and returns a JSON response with the user
+     * information.
+     * 
+     * @return JsonResponse a JsonResponse object.
+     */
+    public function getUser(): JsonResponse {
+        $auth = auth()->guard('api')->user();
+        $user = $this->collectUserDetails($auth, false);
+        return $this->return(200, "User fetched successfully", ['user' => $user]);
+    }
 }

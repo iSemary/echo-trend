@@ -44,6 +44,14 @@ body {
         color: $whiteColor;
     }
 }
+.text-right {
+    text-align: right;
+}
+.row > .form-floating {
+    label {
+        padding-left: 25px;
+    }
+}
 
 .form-control {
     color: $lightGrayColor;

@@ -4,6 +4,7 @@ import Home from "../Pages/Home";
 import NotFound from "../Pages/NotFound";
 import Register from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/Login";
+import Profile from "../Pages/Profile";
 
 function Router(props) {
     return (
@@ -12,6 +13,7 @@ function Router(props) {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
