@@ -7,7 +7,7 @@ import { CgSpinnerTwoAlt } from "react-icons/cg";
 import axiosConfig from "../config/AxiosConfig";
 import { Token } from "../Helpers/Authentication/Token";
 
-const Header = ({ user, loadingUser }) => {
+const Header = ({ user, loadingUser, categories }) => {
     const CURRENT_SESSION = 1;
 
     const handleLogout = () => {
@@ -42,15 +42,18 @@ const Header = ({ user, loadingUser }) => {
                     <Link to="/today" className="nav-link" aria-label="login">
                         <FaFire className="mb-1" /> Today
                     </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Sports
-                    </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Economies
-                    </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Technologies
-                    </Link>
+                    {categories &&
+                        categories.length > 0 &&
+                        categories.slice(0, 4).map((category, index) => (
+                            <Link
+                                key={index}
+                                to={`/categories/${category.slug}`}
+                                className="nav-link"
+                                aria-label="login"
+                            >
+                                {category.title}
+                            </Link>
+                        ))}
                 </Nav>
                 <Nav className="ml-auto nav-registration">
                     {loadingUser ? (

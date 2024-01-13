@@ -10,6 +10,7 @@ import { Token } from "./Helpers/Authentication/Token";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [loadingUser, setLoadingUser] = useState(true);
 
     useEffect(() => {
@@ -29,11 +30,21 @@ function App() {
         checkToken();
     }, []);
 
+    useEffect(() => {
+        axiosConfig.get("/categories").then((response) => {
+            setCategories(response.data.data.categories);
+        });
+    }, []);
+
     return (
         <Container>
-            <Header user={user} loadingUser={loadingUser} />
+            <Header
+                user={user}
+                categories={categories}
+                loadingUser={loadingUser}
+            />
             <Router user={user} />
-            <Footer />
+            <Footer categories={categories} />
         </Container>
     );
 }
