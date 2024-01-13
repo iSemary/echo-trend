@@ -1,0 +1,186 @@
+@import "./variables/variables.module.scss";
+
+body {
+    color: $whiteColor;
+    background-color: $secondaryColor;
+}
+
+.text-accent {
+    color: $accentColor;
+}
+
+.spin-icon {
+    font-size: 20px;
+    animation: spin 350ms linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/**
+
+    Reset bootstrap primary colors for buttons, inputs, textarea, etc..
+
+**/
+.text-primary {
+    color: $primaryColor !important;
+}
+.btn-primary {
+    background-color: $primaryColor;
+    border-color: $primaryColor;
+    color: $whiteColor;
+    &:hover,
+    &:focus,
+    &:active,
+    &:disabled,
+    &:focus-within {
+        background-color: lighten($primaryColor, 10%) !important;
+        border-color: lighten($primaryColor, 10%) !important;
+        color: $whiteColor;
+    }
+}
+
+.form-control {
+    color: $lightGrayColor;
+    background-color: $darkGrayColor;
+    border: 1px solid $lightGrayColor;
+    &:focus {
+        color: $whiteColor;
+        background-color: $darkGrayColor;
+        border-color: $primaryColor;
+        box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
+    }
+    &::placeholder {
+        color: $lightGrayColor;
+    }
+
+    // For chrome auto-complete changing color
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
+        -webkit-text-fill-color: $lightGrayColor !important;
+        -webkit-background-clip: text;
+    }
+}
+.form-floating > .form-control ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: $whiteColor;
+    background-color: transparent;
+}
+
+header {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+
+        .nav-categories {
+            flex: auto;
+        }
+
+        .nav-registration {
+            a:first-of-type {
+                border-right: 1px solid $darkGrayColor;
+            }
+        }
+    }
+
+    .navbar-brand {
+        display: grid;
+        .logo {
+            margin: 0 auto;
+        }
+        .date {
+            font-size: 12px;
+        }
+    }
+}
+
+/**
+
+    Footer Styles
+
+**/
+footer {
+    background-color: $secondaryColor;
+    color: $whiteColor;
+
+    .social-list {
+        list-style: none;
+        display: flex;
+        text-align: center;
+        justify-content: space-evenly;
+
+        li {
+            a {
+                font-size: 25px;
+                color: $whiteColor;
+            }
+        }
+    }
+
+    .tags {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        a.tag {
+            text-decoration: none;
+            padding: 8px;
+            background-color: $primaryColor;
+            color: $whiteColor;
+        }
+    }
+}
+
+/** 
+    Home Page
+**/
+
+.news-scroll {
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    h3 {
+        font-size: 1em;
+        color: $primaryColor;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        line-height: 50px;
+        text-align: center;
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+        -moz-animation: topNewsScroll 15s linear infinite;
+        -webkit-animation: topNewsScroll 15s linear infinite;
+        animation: topNewsScroll 15s linear infinite;
+
+        &:nth-of-type(2) {
+            color: $whiteColor;
+        }
+    }
+}
+@keyframes topNewsScroll {
+    0% {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+}

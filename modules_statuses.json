@@ -1,0 +1,11 @@
+{
+    "Category": true,
+    "News": true,
+    "User": true,
+    "Article": true,
+    "Source": true,
+    "Author": true,
+    "Provider": true,
+    "Language": true,
+    "Country": true
+}
