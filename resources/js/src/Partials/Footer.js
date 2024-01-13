@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <footer className="mt-5 py-3 container">
+        <footer className="mt-5 py-3">
             <Row>
                 {/* Brand Name / Description / Social Links */}
                 <Col sm={12} md={4}>

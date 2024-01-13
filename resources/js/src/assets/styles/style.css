@@ -1,6 +1,71 @@
+:export {
+  primaryColor: #ff184e;
+  secondaryColor: #212428;
+  accentColor: #016064;
+  whiteColor: #f5f5f5;
+  darkGrayColor: #343a40;
+  lightGrayColor: #ced4da; }
+
+body {
+  color: #f5f5f5;
+  background-color: #212428; }
+
+.text-accent {
+  color: #016064; }
+
+/**
+
+    Reset bootstrap primary colors for buttons, inputs, textarea, etc..
+
+**/
+.text-primary {
+  color: #ff184e !important; }
+
+.btn-primary {
+  background-color: #ff184e;
+  border-color: #ff184e;
+  color: #f5f5f5; }
+  .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:focus-within {
+    background-color: #ff4b75 !important;
+    border-color: #ff4b75 !important;
+    color: #f5f5f5; }
+
+.form-control {
+  color: #ced4da;
+  background-color: #343a40;
+  border: 1px solid #ced4da; }
+  .form-control:focus {
+    color: #f5f5f5;
+    background-color: #343a40;
+    border-color: #ff184e;
+    box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25); }
+  .form-control::placeholder {
+    color: #ced4da; }
+  .form-control:-webkit-autofill, .form-control:-webkit-autofill:hover, .form-control:-webkit-autofill:focus, .form-control:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
+    -webkit-text-fill-color: #ced4da !important;
+    -webkit-background-clip: text; }
+
+.form-floating > .form-control ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  color: #f5f5f5;
+  background-color: transparent; }
+
+/** 
+    Reset select2 colors
+**/
+/**
+
+    Footer Styles
+
+**/
 footer {
-  background-color: #212529;
-  color: #fff; }
+  background-color: #212428;
+  color: #f5f5f5; }
   footer .social-list {
     list-style: none;
     display: flex;
@@ -8,7 +73,7 @@ footer {
     justify-content: space-evenly; }
     footer .social-list li a {
       font-size: 25px;
-      color: #fff; }
+      color: #f5f5f5; }
   footer .tags {
     display: flex;
     justify-content: flex-start;
@@ -16,7 +81,7 @@ footer {
     footer .tags a.tag {
       text-decoration: none;
       padding: 8px;
-      background-color: #dc3545;
-      color: #fff; }
+      background-color: #ff184e;
+      color: #f5f5f5; }
 
 /*# sourceMappingURL=style.css.map */

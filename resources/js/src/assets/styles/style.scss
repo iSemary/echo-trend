@@ -1,6 +1,82 @@
+@import "./variables/variables.module.scss";
+
+body {
+    color: $whiteColor;
+    background-color: $secondaryColor;
+}
+
+.text-accent {
+    color: $accentColor;
+}
+/**
+
+    Reset bootstrap primary colors for buttons, inputs, textarea, etc..
+
+**/
+.text-primary {
+    color: $primaryColor !important;
+}
+.btn-primary {
+    background-color: $primaryColor;
+    border-color: $primaryColor;
+    color: $whiteColor;
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-within {
+        background-color: lighten($primaryColor, 10%) !important;
+        border-color: lighten($primaryColor, 10%) !important;
+        color: $whiteColor;
+    }
+}
+
+.form-control {
+    color: $lightGrayColor;
+    background-color: $darkGrayColor;
+    border: 1px solid $lightGrayColor;
+    &:focus {
+        color: $whiteColor;
+        background-color: $darkGrayColor;
+        border-color: $primaryColor;
+        box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
+    }
+    &::placeholder {
+        color: $lightGrayColor;
+    }
+
+    // For chrome auto-complete changing color
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
+        -webkit-text-fill-color: $lightGrayColor !important;
+        -webkit-background-clip: text;
+    }
+}
+.form-floating > .form-control ~ label::after,
+.form-floating > .form-control:focus ~ label::after,
+.form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: $whiteColor;
+    background-color: transparent;
+}
+
+/** 
+    Reset select2 colors
+**/
+
+/**
+
+    Footer Styles
+
+**/
 footer {
-    background-color: #212529;
-    color: #fff;
+    background-color: $secondaryColor;
+    color: $whiteColor;
+
     .social-list {
         list-style: none;
         display: flex;
@@ -10,7 +86,7 @@ footer {
         li {
             a {
                 font-size: 25px;
-                color: #fff;
+                color: $whiteColor;
             }
         }
     }
@@ -19,11 +95,12 @@ footer {
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
+
         a.tag {
             text-decoration: none;
             padding: 8px;
-            background-color: #dc3545;
-            color: #fff;
+            background-color: $primaryColor;
+            color: $whiteColor;
         }
     }
 }

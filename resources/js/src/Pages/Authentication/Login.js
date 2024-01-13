@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import loginImage from "../../assets/images/auth-image.jpg";
+import newsIcon from "../../assets/images/icons/news-report.png";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -9,36 +10,74 @@ const Login = () => {
     const handleLogin = () => {};
 
     return (
-        <Form method="POST">
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </Form.Group>
+        <div className="login-page">
+            <Row>
+                <Col md={6}>
+                    <img src={loginImage} className="w-100 login-image" alt="login" />
+                </Col>
+                <Col md={6}>
+                    <Form className="w-75 m-auto" method="POST">
+                        <h5>
+                            <img
+                                src={newsIcon}
+                                className="me-1"
+                                width={25}
+                                height={25}
+                                alt="news icon"
+                            />
+                            Your Gateway to Timely Updates
+                        </h5>
+                        <p>
+                            Where information meets innovation! Log in to gain
+                            exclusive access to breaking news, in-depth
+                            articles, and personalized content tailored just for
+                            you.{" "}
+                        </p>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </Form.Group>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Email address"
+                            className="mb-3"
+                        >
+                            <Form.Control
+                                type="email"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </FloatingLabel>
+                        <FloatingLabel
+                            controlId="floatingPassword"
+                            label="Password"
+                        >
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </FloatingLabel>
 
-            <Form.Group>
-                Don't have an account?{" "}
-                <Link to="/register">let's register now!</Link>
-            </Form.Group>
+                        <Form.Group className="my-3">
+                            <Button
+                                variant="primary"
+                                className="w-100"
+                                onClick={handleLogin}
+                            >
+                                Login
+                            </Button>
+                        </Form.Group>
 
-            <Button variant="primary" onClick={handleLogin}>
-                Login
-            </Button>
-        </Form>
+                        <Form.Group className="text-center">
+                            Don't have an account?{" "}
+                            <Link to="/register" className="text-primary">
+                                let's register now!
+                            </Link>
+                        </Form.Group>
+                    </Form>
+                </Col>
+            </Row>
+        </div>
     );
 };
 

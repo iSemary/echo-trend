@@ -1,41 +1,134 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, FloatingLabel, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import registerImage from "../../assets/images/auth-image.jpg";
+import newsIcon from "../../assets/images/icons/news-report.png";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import styleVariables from "../../assets/styles/variables/variables.module.scss";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const animatedComponents = makeAnimated();
+
+    const options = [
+        { value: "chocolate", label: "Chocolate" },
+        { value: "strawberry", label: "Strawberry" },
+        { value: "vanilla", label: "Vanilla" },
+    ];
+
     const handleRegister = () => {};
 
     return (
-        <Form>
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </Form.Group>
+        <div className="register-page">
+            <Row>
+                <Col md={4}>
+                    <img
+                        src={registerImage}
+                        className="w-100 login-image"
+                        alt="register"
+                    />
+                </Col>
+                <Col md={8}>
+                    <Form className="w-75 m-auto" method="POST">
+                        <h5>
+                            <img
+                                src={newsIcon}
+                                className="me-1"
+                                width={25}
+                                height={25}
+                                alt="news icon"
+                            />
+                            Your Gateway to Timely Updates
+                        </h5>
+                        <p>
+                            Become a part of the news community by registering
+                            today! Unlock a world of premium content,
+                            personalized news feeds, and exclusive features
+                            tailored to your interests.
+                        </p>
 
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </Form.Group>
-            <Form.Group>
-                Already registered? <Link to="/login">Login now!</Link>
-            </Form.Group>
-            <Button variant="primary" onClick={handleRegister}>
-                Register
-            </Button>
-        </Form>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Full Name"
+                            className="mb-3"
+                        >
+                            <Form.Control
+                                type="text"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </FloatingLabel>
+
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Email address"
+                            className="mb-3"
+                        >
+                            <Form.Control
+                                type="email"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </FloatingLabel>
+
+                        <FloatingLabel
+                            controlId="floatingPassword"
+                            label="Password"
+                        >
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </FloatingLabel>
+
+                        <Form.Group className="mt-2">
+                            <Form.Label>Interests (optional)</Form.Label>
+                            <Select
+                                closeMenuOnSelect={false}
+                                components={animatedComponents}
+                                isMulti
+                                options={options}
+                                theme={(theme) => ({
+                                    ...theme,
+                                    colors: {
+                                        ...theme.colors,
+                                        primary25: styleVariables.primaryColor,
+                                        primary: styleVariables.primaryColor,
+                                        neutral0: styleVariables.darkGrayColor,
+                                        neutral10: styleVariables.primaryColor,
+                                        neutral80: styleVariables.whiteColor,
+                                    },
+                                })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="my-3">
+                            <Button
+                                variant="primary"
+                                className="w-100"
+                                onClick={handleRegister}
+                            >
+                                Create an account
+                            </Button>
+                        </Form.Group>
+
+                        <Form.Group className="text-center">
+                            Already registered?{" "}
+                            <Link to="/login" className="text-primary">
+                                login now!
+                            </Link>
+                        </Form.Group>
+                    </Form>
+                </Col>
+            </Row>
+        </div>
     );
 };
 
