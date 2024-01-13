@@ -8,6 +8,20 @@ body {
 .text-accent {
     color: $accentColor;
 }
+
+.spin-icon {
+    font-size: 20px;
+    animation: spin 350ms linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 /**
 
     Reset bootstrap primary colors for buttons, inputs, textarea, etc..
@@ -23,6 +37,7 @@ body {
     &:hover,
     &:focus,
     &:active,
+    &:disabled,
     &:focus-within {
         background-color: lighten($primaryColor, 10%) !important;
         border-color: lighten($primaryColor, 10%) !important;
@@ -64,9 +79,32 @@ body {
     background-color: transparent;
 }
 
-/** 
-    Reset select2 colors
-**/
+header {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+
+        .nav-categories {
+            flex: auto;
+        }
+
+        .nav-registration {
+            a:first-of-type {
+                border-right: 1px solid $darkGrayColor;
+            }
+        }
+    }
+
+    .navbar-brand {
+        display: grid;
+        .logo {
+            margin: 0 auto;
+        }
+        .date {
+            font-size: 12px;
+        }
+    }
+}
 
 /**
 
@@ -102,5 +140,47 @@ footer {
             background-color: $primaryColor;
             color: $whiteColor;
         }
+    }
+}
+
+/** 
+    Home Page
+**/
+
+.news-scroll {
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    h3 {
+        font-size: 1em;
+        color: $primaryColor;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        line-height: 50px;
+        text-align: center;
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+        -moz-animation: topNewsScroll 15s linear infinite;
+        -webkit-animation: topNewsScroll 15s linear infinite;
+        animation: topNewsScroll 15s linear infinite;
+
+        &:nth-of-type(2) {
+            color: $whiteColor;
+        }
+    }
+}
+@keyframes topNewsScroll {
+    0% {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
     }
 }

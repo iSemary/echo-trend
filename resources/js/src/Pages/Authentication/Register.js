@@ -11,28 +11,36 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    // Select2 animation on select
     const animatedComponents = makeAnimated();
 
+    // Categories options
     const options = [
         { value: "chocolate", label: "Chocolate" },
         { value: "strawberry", label: "Strawberry" },
         { value: "vanilla", label: "Vanilla" },
     ];
 
-    const handleRegister = () => {};
+    const handleRegister = (e) => {
+        e.preventDefault();
+    };
 
     return (
         <div className="register-page">
             <Row>
-                <Col md={4}>
+                <Col md={6} className="d-grid align-items-center">
                     <img
                         src={registerImage}
                         className="w-100 login-image"
                         alt="register"
                     />
                 </Col>
-                <Col md={8}>
-                    <Form className="w-75 m-auto" method="POST">
+                <Col md={6}>
+                    <Form
+                        className="w-75 m-auto"
+                        method="POST"
+                        onSubmit={handleRegister}
+                    >
                         <h5>
                             <img
                                 src={newsIcon}
@@ -50,39 +58,28 @@ const Register = () => {
                             tailored to your interests.
                         </p>
 
-                        <FloatingLabel
-                            controlId="floatingInput"
-                            label="Full Name"
-                            className="mb-3"
-                        >
+                        <FloatingLabel label="Full Name" className="mb-3">
                             <Form.Control
                                 type="text"
-                                placeholder="name@example.com"
+                                placeholder=""
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </FloatingLabel>
 
-                        <FloatingLabel
-                            controlId="floatingInput"
-                            label="Email address"
-                            className="mb-3"
-                        >
+                        <FloatingLabel label="Email address" className="mb-3">
                             <Form.Control
                                 type="email"
-                                placeholder="name@example.com"
+                                placeholder=""
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </FloatingLabel>
 
-                        <FloatingLabel
-                            controlId="floatingPassword"
-                            label="Password"
-                        >
+                        <FloatingLabel label="Password">
                             <Form.Control
                                 type="password"
-                                placeholder="Password"
+                                placeholder=""
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -113,7 +110,7 @@ const Register = () => {
                             <Button
                                 variant="primary"
                                 className="w-100"
-                                onClick={handleRegister}
+                                type="submit"
                             >
                                 Create an account
                             </Button>

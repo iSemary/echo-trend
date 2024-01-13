@@ -1,0 +1,9 @@
+{
+    "name": "Provider",
+    "alias": "provider",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [],
+    "files": []
+}
