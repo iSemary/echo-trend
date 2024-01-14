@@ -9,6 +9,8 @@ export const ArticleDetails = () => {
     const { slug } = useParams();
 
     const [article, setArticle] = useState(null);
+    const [relatedArticles, setRelatedArticles] = useState([]);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -48,7 +50,7 @@ export const ArticleDetails = () => {
                 <Col md={4}>
                     <h3 className="mb-3">Related Articles</h3>
                     <ul>
-                        {article.relatedArticles.map((relatedArticle) => (
+                        {relatedArticles && relatedArticles.length && relatedArticles.map((relatedArticle) => (
                             <li key={relatedArticle.id}>
                                 <a href={`/article/${relatedArticle.slug}`}>
                                     {relatedArticle.title}

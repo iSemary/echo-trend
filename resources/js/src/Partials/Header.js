@@ -9,7 +9,7 @@ import { Token } from "../Helpers/Authentication/Token";
 import { SearchContainer } from "../Helpers/Search/SearchContainer";
 import { FaSearch } from "react-icons/fa";
 
-const Header = ({ user, loadingUser, categories }) => {
+const Header = ({ user, loadingUser, categories, sources }) => {
     const CURRENT_SESSION = 1;
 
     const [showSearchBar, setShowSearchBar] = useState(false);
@@ -108,7 +108,7 @@ const Header = ({ user, loadingUser, categories }) => {
                 </Nav>
             </Navbar>
 
-            <SearchContainer categories={categories} show={showSearchBar} />
+            <SearchContainer categories={categories} sources={sources} show={showSearchBar} />
         </header>
     );
 };

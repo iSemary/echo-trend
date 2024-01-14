@@ -2,14 +2,28 @@ import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import CustomSelector from "../Utilities/CustomSelector";
 
-export const SearchContainer = ({ show, categories }) => {
+export const SearchContainer = ({ show, categories, sources }) => {
     const [keyword, setKeyword] = useState("");
+    const [category, setCategory] = useState("");
+    const [source, setSource] = useState("");
+    const [date, setDate] = useState("");
 
     const handleChangeKeyword = (e) => {
         setKeyword(e.target.value);
     };
-    const handleChangeCategory = (e) => {};
 
+    const handleChangeCategory = (e) => {
+        console.log(e);
+        setCategory();
+    };
+
+    const handleChangeSource = (e) => {
+        setSource();
+    };
+
+    const handleChangeDate = (e) => {
+        setDate(e.target.value);
+    };
     return (
         <Form className={`search-container ${show ? "visible" : "hidden"}`}>
             <Row className="m-auto">
@@ -34,13 +48,18 @@ export const SearchContainer = ({ show, categories }) => {
                 {/* Select Sources */}
                 <Col lg={2} className="mx-0 pe-0">
                     <CustomSelector
-                        options={categories}
+                        options={sources}
                         placeholder="Source"
-                        onChange={handleChangeCategory}
+                        onChange={handleChangeSource}
                     />
                 </Col>
                 <Col lg={2} className="mx-0 pe-0">
-                    <input type="date" className="form-control" />
+                    <input
+                        type="date"
+                        onChange={handleChangeDate}
+                        value={date}
+                        className="form-control"
+                    />
                 </Col>
                 <Col lg={2} className="mx-0 pe-0">
                     <Button>Search</Button>
