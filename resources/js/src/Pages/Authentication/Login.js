@@ -48,19 +48,19 @@ const Login = () => {
     };
 
     return (
-        <div className="login-page">
+        <div className="login-page mt-3">
             <ToastContainer />
             <Row>
-                <Col md={6}>
+                <Col md={12} lg={6}>
                     <img
                         src={loginImage}
-                        className="w-100 login-image"
+                        className="w-100 login-image d-none d-sm-none d-lg-block"
                         alt="login"
                     />
                 </Col>
-                <Col md={6}>
+                <Col sm={12} md={12} lg={6}>
                     <Form
-                        className="w-75 m-auto"
+                        className="m-auto"
                         method="POST"
                         onSubmit={handleLogin}
                     >
