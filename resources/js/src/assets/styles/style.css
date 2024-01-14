@@ -2,13 +2,13 @@
   primaryColor: #ff184e;
   secondaryColor: #212428;
   accentColor: #016064;
-  whiteColor: #f5f5f5;
+  whiteColor: rgba(255, 255, 255, 0.5490196078);
   darkGrayColor: #343a40;
   lightGrayColor: #ced4da;
 }
 
 body {
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
   background-color: #212428;
 }
 
@@ -41,12 +41,20 @@ body {
 .btn-primary {
   background-color: #ff184e;
   border-color: #ff184e;
-  color: #f5f5f5;
+  color: #fff;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:disabled, .btn-primary:focus-within {
   background-color: #ff4b75 !important;
   border-color: #ff4b75 !important;
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.row > .form-floating label {
+  padding-left: 25px;
 }
 
 .form-control {
@@ -55,7 +63,7 @@ body {
   border: 1px solid #ced4da;
 }
 .form-control:focus {
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
   background-color: #343a40;
   border-color: #ff184e;
   box-shadow: 0 0 0 0.25rem rgba(255, 24, 78, 0.25);
@@ -75,10 +83,13 @@ body {
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
   background-color: transparent;
 }
 
+header {
+  background-color: #212428;
+}
 header .navbar {
   display: flex;
   justify-content: space-between;
@@ -86,8 +97,15 @@ header .navbar {
 header .navbar .nav-categories {
   flex: auto;
 }
-header .navbar .nav-registration a:first-of-type {
+header .navbar .nav-registration a,
+header .navbar .nav-registration button {
   border-right: 1px solid #343a40;
+}
+header .navbar .nav-registration a:last-child, header .navbar .nav-registration a:last-child + a, header .navbar .nav-registration a:last-child + button,
+header .navbar .nav-registration button:last-child,
+header .navbar .nav-registration button:last-child + a,
+header .navbar .nav-registration button:last-child + button {
+  border-right: 0;
 }
 header .navbar-brand {
   display: grid;
@@ -98,6 +116,16 @@ header .navbar-brand .logo {
 header .navbar-brand .date {
   font-size: 12px;
 }
+header .search-container {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.7s ease, max-height 0.3s ease;
+}
+header .search-container.visible {
+  opacity: 1;
+  max-height: 100px;
+}
 
 /**
 
@@ -106,7 +134,7 @@ header .navbar-brand .date {
 **/
 footer {
   background-color: #212428;
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
 }
 footer .social-list {
   list-style: none;
@@ -116,7 +144,7 @@ footer .social-list {
 }
 footer .social-list li a {
   font-size: 25px;
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
 }
 footer .tags {
   display: flex;
@@ -127,7 +155,7 @@ footer .tags a.tag {
   text-decoration: none;
   padding: 8px;
   background-color: #ff184e;
-  color: #f5f5f5;
+  color: #fff;
 }
 
 /** 
@@ -155,7 +183,7 @@ footer .tags a.tag {
   animation: topNewsScroll 15s linear infinite;
 }
 .news-scroll h3:nth-of-type(2) {
-  color: #f5f5f5;
+  color: rgba(255, 255, 255, 0.5490196078);
 }
 
 @keyframes topNewsScroll {
@@ -169,6 +197,23 @@ footer .tags a.tag {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
+}
+.top-heading .heading-item .card-img-top {
+  filter: contrast(0.7);
+}
+.top-heading .heading-item .publish-details {
+  color: #fff;
+  border-left: 2px solid #ff184e;
+  padding-left: 6px;
+}
+.top-heading .heading-item .category-tag {
+  position: absolute;
+  top: 0;
+  color: #fff;
+  background-color: #ff184e;
+  border-radius: 3px;
+  padding: 5px;
+  z-index: 1;
 }
 
 /*# sourceMappingURL=style.css.map */

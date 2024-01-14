@@ -13,10 +13,13 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get("check", [AuthController::class, "checkAuthentication"]);
-
-        Route::get("profile", [UserController::class, "getProfile"]);
-        Route::post("profile", [UserController::class, "updateProfile"]);
-
+        Route::get("user", [AuthController::class, "getUser"]);
         Route::post("logout", [AuthController::class, "logout"]);
     });
+});
+
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get("profile", [UserController::class, "getProfile"]);
+    Route::post("profile", [UserController::class, "updateProfile"]);
 });

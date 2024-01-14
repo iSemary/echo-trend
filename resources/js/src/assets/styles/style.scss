@@ -33,7 +33,7 @@ body {
 .btn-primary {
     background-color: $primaryColor;
     border-color: $primaryColor;
-    color: $whiteColor;
+    color: #fff;
     &:hover,
     &:focus,
     &:active,
@@ -42,6 +42,14 @@ body {
         background-color: lighten($primaryColor, 10%) !important;
         border-color: lighten($primaryColor, 10%) !important;
         color: $whiteColor;
+    }
+}
+.text-right {
+    text-align: right;
+}
+.row > .form-floating {
+    label {
+        padding-left: 25px;
     }
 }
 
@@ -80,6 +88,7 @@ body {
 }
 
 header {
+    background-color: $secondaryColor;
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -89,8 +98,14 @@ header {
         }
 
         .nav-registration {
-            a:first-of-type {
+            a,
+            button {
                 border-right: 1px solid $darkGrayColor;
+                &:last-child,
+                &:last-child + a,
+                &:last-child + button {
+                    border-right: 0;
+                }
             }
         }
     }
@@ -103,6 +118,18 @@ header {
         .date {
             font-size: 12px;
         }
+    }
+
+    .search-container {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 0.7s ease, max-height 0.3s ease;
+    }
+
+    .search-container.visible {
+        opacity: 1;
+        max-height: 100px;
     }
 }
 
@@ -138,7 +165,7 @@ footer {
             text-decoration: none;
             padding: 8px;
             background-color: $primaryColor;
-            color: $whiteColor;
+            color: #fff;
         }
     }
 }
@@ -182,5 +209,29 @@ footer {
         -moz-transform: translateX(-100%);
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
+    }
+}
+
+.top-heading {
+    .heading-item {
+        .card-img-top {
+            filter: contrast(0.7);
+        }
+
+        .publish-details {
+            color: #fff;
+            border-left: 2px solid $primaryColor;
+            padding-left: 6px;
+        }
+
+        .category-tag {
+            position: absolute;
+            top: 0;
+            color: #fff;
+            background-color: $primaryColor;
+            border-radius: 3px;
+            padding: 5px;
+            z-index: 1;
+        }
     }
 }

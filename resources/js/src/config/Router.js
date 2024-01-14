@@ -4,6 +4,12 @@ import Home from "../Pages/Home";
 import NotFound from "../Pages/NotFound";
 import Register from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/Login";
+import Profile from "../Pages/Profile";
+import CategoryArticles from "../Pages/CategoryArticles";
+import AuthorArticles from "../Pages/AuthorArticles";
+import SourceArticles from "../Pages/SourceArticles";
+import Search from "../Pages/Search";
+import { ArticleDetails } from "../Pages/ArticleDetails";
 
 function Router(props) {
     return (
@@ -12,6 +18,22 @@ function Router(props) {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+
+                <Route
+                    path="/categories/:slug/articles"
+                    element={<CategoryArticles />}
+                />
+                <Route
+                    path="/authors/:slug/articles"
+                    element={<AuthorArticles />}
+                />
+                <Route path="/sources/:slug/articles" element={<SourceArticles />}/>
+
+                <Route path="/articles/:slug" element={<ArticleDetails />} />
+
+                <Route path="/search" element={<Search />} />
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

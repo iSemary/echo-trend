@@ -10,7 +10,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 
-const Footer = () => {
+const Footer = ({ categories }) => {
     return (
         <footer className="mt-5 py-3">
             <Row>
@@ -78,24 +78,17 @@ const Footer = () => {
                 <Col sm={12} md={4}>
                     <h3>Tags</h3>
                     <div className="tags">
-                        <Link className="tag" to="/tags/sports">
-                            Sports
-                        </Link>
-                        <Link className="tag" to="/tags/economies">
-                            Economies
-                        </Link>
-                        <Link className="tag" to="/tags/health-fitness">
-                            Health & Fitness
-                        </Link>
-                        <Link className="tag" to="/tags/world">
-                            World
-                        </Link>
-                        <Link className="tag" to="/tags/business">
-                            Business
-                        </Link>
-                        <Link className="tag" to="/tags/entertainment">
-                            Entertainment
-                        </Link>
+                        {categories &&
+                            categories.length > 0 &&
+                            categories.slice(0, 10).map((category, index) => (
+                                <Link
+                                    key={index}
+                                    className="tag"
+                                    to={`/categories/${category.slug}/articles`}
+                                >
+                                    {category.title}
+                                </Link>
+                            ))}
                     </div>
                 </Col>
             </Row>

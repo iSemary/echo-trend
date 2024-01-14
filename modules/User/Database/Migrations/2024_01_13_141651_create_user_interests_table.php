@@ -12,7 +12,9 @@ return new class extends Migration {
         Schema::create('user_interests', function (Blueprint $table) {
             $table->id();
             $table->integer("user_id");
-            $table->integer("category_id");
+            $table->integer("item_id");
+            $table->tinyInteger("item_type_id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

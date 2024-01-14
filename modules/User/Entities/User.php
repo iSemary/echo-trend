@@ -22,6 +22,7 @@ class User extends Authenticatable {
         'password',
         'phone',
         'username',
+        'country_id',
     ];
 
     /**
@@ -43,4 +44,22 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function userInterests() {
+        return $this->hasMany(UserInterest::class, 'user_id');
+    }
+
+    public function syncInterests(array $interests, int $typeId) {
+        if (isset($interests) && is_array($interests) && count($interests)) {
+            UserInterest::whereUserId($this->attributes['id'])->whereItemTypeId($typeId)->delete();
+            foreach ($interests as $interest) {
+                UserInterest::withTrashed()->whereUserId($this->attributes['id'])
+                    ->updateOrCreate(
+                        ['user_id' => $this->attributes['id'], 'item_type_id' => $typeId, 'item_id' => $interest],
+                        ['deleted_at' => null]
+                    );
+            }
+        }
+    }
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
     return (
-        <Container className="not-found-container">
+        <Container className="not-found-container my-5">
             <Row className="justify-content-center align-items-center full-height">
                 <Col md={6} className="text-center">
                     <h1 className="display-1">404</h1>

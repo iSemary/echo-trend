@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import { FaFire } from "react-icons/fa6";
+import { CgSpinnerTwoAlt } from "react-icons/cg";
+import AxiosConfig from "../config/AxiosConfig";
+import { Token } from "../Helpers/Authentication/Token";
+import { SearchContainer } from "../Helpers/Search/SearchContainer";
+import { FaSearch } from "react-icons/fa";
 
-const Header = () => {
+const Header = ({ user, loadingUser, categories }) => {
+    const CURRENT_SESSION = 1;
+
+    const [showSearchBar, setShowSearchBar] = useState(false);
+
+    const handleLogout = () => {
+        AxiosConfig.post("/auth/logout", { type: CURRENT_SESSION })
+            .then((response) => {
+                Token.explode();
+            })
+            .catch((error) => console.error(error));
+    };
+
     return (
         <header>
-            <Navbar bg="dark" className="container" variant="dark">
+            <Navbar className="container" variant="dark">
                 <Link to="/" className="navbar-brand" aria-label="home">
                     <img
                         src={logo}
@@ -28,29 +45,70 @@ const Header = () => {
                     <Link to="/today" className="nav-link" aria-label="login">
                         <FaFire className="mb-1" /> Today
                     </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Sports
-                    </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Economies
-                    </Link>
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        Technologies
-                    </Link>
+                    {categories &&
+                        categories.length > 0 &&
+                        categories.slice(0, 4).map((category, index) => (
+                            <Link
+                                key={index}
+                                to={`/categories/${category.slug}/articles`}
+                                className="nav-link"
+                                aria-label="login"
+                            >
+                                {category.title}
+                            </Link>
+                        ))}
                 </Nav>
                 <Nav className="ml-auto nav-registration">
-                    <Link to="/login" className="nav-link" aria-label="login">
-                        Login
-                    </Link>
-                    <Link
-                        to="/register"
+                    <button
                         className="nav-link"
-                        aria-label="create an account"
+                        aria-label="search"
+                        type="button"
+                        onClick={(e) => setShowSearchBar(!showSearchBar)}
                     >
-                        Create an account
-                    </Link>
+                        <FaSearch />
+                    </button>
+                    {loadingUser ? (
+                        <CgSpinnerTwoAlt className="spin-icon" />
+                    ) : user ? (
+                        <>
+                            <Link
+                                to="/profile"
+                                className="nav-link"
+                                aria-label="profile"
+                            >
+                                {user.full_name}
+                            </Link>
+                            <button
+                                className="btn nav-link"
+                                aria-label="logout"
+                                type="button"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                className="nav-link"
+                                aria-label="login"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                to="/register"
+                                className="nav-link"
+                                aria-label="create an account"
+                            >
+                                Create an account
+                            </Link>
+                        </>
+                    )}
                 </Nav>
             </Navbar>
+
+            <SearchContainer categories={categories} show={showSearchBar} />
         </header>
     );
 };
