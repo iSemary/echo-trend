@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use modules\Country\Entities\Country;
 use modules\User\Entities\User;
+use modules\User\Interfaces\UserInterestTypes;
 
 class AuthController extends ApiController {
     /**
@@ -26,8 +28,15 @@ class AuthController extends ApiController {
         $username = strtok($email, '@');
         // Adding username to the $userRequest array
         $userRequest['username'] = $username .  Str::random(4);
+        // Append dial code to phone number
+        $userRequest['phone'] = $userRequest['dial_code'] . $userRequest['phone'];
+        // Create or update the country code if not exists
+        $userRequest['country_id'] = Country::getCountryIdByCode($userRequest['country_code']);
         // Create new user record
         $user = User::create($userRequest);
+        // Create user preferred categories
+        $user->syncInterests($userRequest['categories'], UserInterestTypes::CATEGORY);
+        // Collect user details for authentication
         $response = $this->collectUserDetails($user);
         // Return Success Json Response
         return $this->return(200, 'User Registered Successfully', ['user' => $response]);

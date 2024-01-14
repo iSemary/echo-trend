@@ -3,7 +3,7 @@ import Router from "./config/Router";
 import Header from "./Partials/Header";
 import Footer from "./Partials/Footer";
 import { Container } from "react-bootstrap";
-import axiosConfig from "./config/AxiosConfig";
+import AxiosConfig from "./config/AxiosConfig";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/styles/style.css";
 import { Token } from "./Helpers/Authentication/Token";
@@ -18,7 +18,7 @@ function App() {
             try {
                 const isAuthenticated = await Token.check();
                 if (isAuthenticated) {
-                    const response = await axiosConfig.get("/auth/user");
+                    const response = await AxiosConfig.get("/auth/user");
                     setUser(response.data.data.user);
                 }
             } catch (error) {
@@ -31,7 +31,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        axiosConfig.get("/categories").then((response) => {
+        AxiosConfig.get("/categories").then((response) => {
             setCategories(response.data.data.categories);
         });
     }, []);

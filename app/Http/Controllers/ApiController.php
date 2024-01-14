@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use modules\User\Entities\User;
 use stdClass;
 
 class ApiController extends Controller {
@@ -50,5 +51,14 @@ class ApiController extends Controller {
      */
     public function returnUnAuthorized(): JsonResponse {
         return $this->return(401, "Unauthorized");
+    }
+
+    /**
+     * Get the authenticated user from the API guard.
+     *
+     * @return User The authenticated user
+     */
+    public function getAuthenticatedUser(): User {
+        return auth()->guard('api')->user();
     }
 }

@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import { FaFire } from "react-icons/fa6";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import axiosConfig from "../config/AxiosConfig";
+import AxiosConfig from "../config/AxiosConfig";
 import { Token } from "../Helpers/Authentication/Token";
+import { SearchContainer } from "../Helpers/Search/SearchContainer";
+import { FaSearch } from "react-icons/fa";
 
 const Header = ({ user, loadingUser, categories }) => {
     const CURRENT_SESSION = 1;
 
+    const [showSearchBar, setShowSearchBar] = useState(false);
+
     const handleLogout = () => {
-        axiosConfig
-            .post("/auth/logout", { type: CURRENT_SESSION })
+        AxiosConfig.post("/auth/logout", { type: CURRENT_SESSION })
             .then((response) => {
                 Token.explode();
             })
@@ -21,7 +24,7 @@ const Header = ({ user, loadingUser, categories }) => {
 
     return (
         <header>
-            <Navbar bg="dark" className="container" variant="dark">
+            <Navbar className="container" variant="dark">
                 <Link to="/" className="navbar-brand" aria-label="home">
                     <img
                         src={logo}
@@ -47,7 +50,7 @@ const Header = ({ user, loadingUser, categories }) => {
                         categories.slice(0, 4).map((category, index) => (
                             <Link
                                 key={index}
-                                to={`/categories/${category.slug}`}
+                                to={`/categories/${category.slug}/articles`}
                                 className="nav-link"
                                 aria-label="login"
                             >
@@ -56,6 +59,14 @@ const Header = ({ user, loadingUser, categories }) => {
                         ))}
                 </Nav>
                 <Nav className="ml-auto nav-registration">
+                    <button
+                        className="nav-link"
+                        aria-label="search"
+                        type="button"
+                        onClick={(e) => setShowSearchBar(!showSearchBar)}
+                    >
+                        <FaSearch />
+                    </button>
                     {loadingUser ? (
                         <CgSpinnerTwoAlt className="spin-icon" />
                     ) : user ? (
@@ -96,6 +107,8 @@ const Header = ({ user, loadingUser, categories }) => {
                     )}
                 </Nav>
             </Navbar>
+
+            <SearchContainer categories={categories} show={showSearchBar} />
         </header>
     );
 };

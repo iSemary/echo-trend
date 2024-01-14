@@ -12,4 +12,16 @@ class Country extends Model {
      * The attributes that are mass assignable.
      */
     protected $fillable = ['name', 'code'];
+
+
+    public static function getCountryIdByCode(string $countryCode): int {
+        $country = self::select('id')->whereCode($countryCode)->first();
+        if (!$country) {
+            $country = self::create([
+                'name' => $countryCode,
+                'code' => $countryCode,
+            ]);
+        }
+        return $country->id;
+    }
 }

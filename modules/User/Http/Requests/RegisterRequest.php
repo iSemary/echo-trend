@@ -22,7 +22,10 @@ class RegisterRequest extends FormRequest {
             'full_name' => 'required|max:164',
             'email' => 'required|max:255|unique:users,email',
             'phone' => 'required|max:14|unique:users,phone',
+            'dial_code' => 'required|max:4|numeric',
+            'country_code' => 'required|max:4',
             'password' => 'required|confirmed|max:255|min:8',
+            'categories' => 'sometimes|array'
         ];
     }
 }

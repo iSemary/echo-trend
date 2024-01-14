@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/images/auth-image.jpg";
 import newsIcon from "../../assets/images/icons/news-report.png";
-import axiosConfig from "../../config/AxiosConfig";
+import AxiosConfig from "../../config/AxiosConfig";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { ToastContainer, ToastAlert } from "../../Helpers/Alerts/ToastAlert";
 import { Token } from "../../Helpers/Authentication/Token";
@@ -16,7 +16,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         setLoading(true);
-        axiosConfig
+        AxiosConfig
             .post("/auth/login", { email: email, password: password })
             .then((response) => {
                 clearForm();

@@ -84,7 +84,7 @@ const Footer = ({ categories }) => {
                                 <Link
                                     key={index}
                                     className="tag"
-                                    to={`/categories/${category.slug}`}
+                                    to={`/categories/${category.slug}/articles`}
                                 >
                                     {category.title}
                                 </Link>

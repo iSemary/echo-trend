@@ -3,15 +3,14 @@ import { Form, Button, FloatingLabel, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import registerImage from "../../assets/images/auth-image.jpg";
 import newsIcon from "../../assets/images/icons/news-report.png";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
-import styleVariables from "../../assets/styles/variables/variables.module.scss";
-import axiosConfig from "../../config/AxiosConfig";
+import AxiosConfig from "../../config/AxiosConfig";
 import IntlTelInput from "react-intl-tel-input-18";
 import "react-intl-tel-input-18/dist/main.css";
 import { ToastContainer, ToastAlert } from "../../Helpers/Alerts/ToastAlert";
 import { Token } from "../../Helpers/Authentication/Token";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
+import CustomSelector from "../../Helpers/Utilities/CustomSelector";
+import { LuInfo } from "react-icons/lu";
 
 const Register = () => {
     const initialValues = {
@@ -22,12 +21,10 @@ const Register = () => {
         country_code: "",
         password: "",
         password_confirmation: "",
-        interests: [],
+        categories: [],
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [loading, setLoading] = useState(false);
-    // Select2 animation on select
-    const animatedComponents = makeAnimated();
     // Categories options
     const [categories, setCategories] = useState([]);
     /** Change form values states on change inputs based on name and value */
@@ -49,9 +46,10 @@ const Register = () => {
     };
 
     const handleChangeInterests = (e) => {
+        const selectedIds = e.map((option) => option.id);
         setFormValues({
             ...formValues,
-            interests: e,
+            categories: selectedIds,
         });
     };
 
@@ -60,8 +58,7 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
 
-        axiosConfig
-            .post("/auth/register", formValues)
+        AxiosConfig.post("/auth/register", formValues)
             .then((response) => {
                 clearForm();
                 setLoading(false);
@@ -91,7 +88,7 @@ const Register = () => {
 
     /** Getting the categories  */
     useEffect(() => {
-        axiosConfig.get("/categories").then((response) => {
+        AxiosConfig.get("/categories").then((response) => {
             setCategories(response.data.data.categories);
         });
     }, []);
@@ -160,6 +157,7 @@ const Register = () => {
                                 containerClassName="intl-tel-input w-100"
                                 inputClassName="form-control"
                                 fieldName="phone"
+                                type="tel"
                                 required
                                 disabled={loading ? "disabled" : ""}
                                 defaultCountry={"de"}
@@ -197,27 +195,18 @@ const Register = () => {
 
                         <Form.Group className="mt-2">
                             <Form.Label>Interests (optional)</Form.Label>
-                            <Select
-                                closeMenuOnSelect={false}
-                                onChange={handleChangeInterests}
-                                components={animatedComponents}
-                                isMulti
-                                labelKey="id"
-                                getOptionLabel={(option) => `${option.title}`}
-                                getOptionValue={(option) => `${option.id}`}
+                            <CustomSelector
                                 options={categories}
-                                theme={(theme) => ({
-                                    ...theme,
-                                    colors: {
-                                        ...theme.colors,
-                                        primary25: styleVariables.primaryColor,
-                                        primary: styleVariables.primaryColor,
-                                        neutral0: styleVariables.darkGrayColor,
-                                        neutral10: styleVariables.primaryColor,
-                                        neutral80: styleVariables.whiteColor,
-                                    },
-                                })}
+                                placeholder="Categories"
+                                onChange={handleChangeInterests}
+                                defaultSelectedValues={formValues.categories}
+                                isMulti
                             />
+                            <small>
+                                <LuInfo /> You can modify categories, authors,
+                                and sources at any time through settings to suit
+                                your preferences.
+                            </small>
                         </Form.Group>
 
                         <Form.Group className="my-3">
