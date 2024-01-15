@@ -11,8 +11,11 @@ use modules\Article\Http\Controllers\Api\ArticleController;
  * modules/Category/routes/api.php
  */
 
-// Home API
-Route::get("/", [HomeController::class, "index"]);
+// Top Headings API
+Route::get("/top-headings", [HomeController::class, "topHeadings"]);
+
+// Today's news
+Route::get("/today", [ArticleController::class, "todayArticles"]);
 
 // Search API
 Route::get("search", [ArticleController::class, "find"]);

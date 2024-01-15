@@ -181,39 +181,27 @@ footer {
 **/
 
 .news-scroll {
+    // display: inline-flex;
     height: 50px;
     overflow: hidden;
     position: relative;
-    h3 {
-        font-size: 1em;
-        color: $primaryColor;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        line-height: 50px;
-        text-align: center;
-        -moz-transform: translateX(100%);
-        -webkit-transform: translateX(100%);
-        transform: translateX(100%);
-        -moz-animation: topNewsScroll 15s linear infinite;
-        -webkit-animation: topNewsScroll 15s linear infinite;
-        animation: topNewsScroll 15s linear infinite;
-
-        &:nth-of-type(2) {
-            color: $whiteColor;
-        }
-    }
 }
+
+.news-scroll h3 {
+    font-size: 1em;
+    color: $primaryColor;
+    margin: 0;
+    line-height: 50px;
+    text-align: center;
+    white-space: nowrap;
+    animation: topNewsScroll 45s linear infinite;
+}
+
 @keyframes topNewsScroll {
     0% {
-        -moz-transform: translateX(100%);
-        -webkit-transform: translateX(100%);
         transform: translateX(100%);
     }
     100% {
-        -moz-transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
     }
 }
@@ -244,6 +232,7 @@ footer {
 
         .heading-image {
             background-color: $secondaryColor;
+            overflow: hidden;
         }
     }
 }

@@ -11,6 +11,7 @@ import AuthorArticles from "../Pages/AuthorArticles";
 import SourceArticles from "../Pages/SourceArticles";
 import Search from "../Pages/Search";
 import { ArticleDetails } from "../Pages/ArticleDetails";
+import TodayArticles from "../Pages/TodayArticles";
 
 function Router(props) {
     return (
@@ -34,8 +35,16 @@ function Router(props) {
                     path="/sources/:slug/articles"
                     element={<SourceArticles />}
                 />
+                
+                <Route
+                    path="/today"
+                    element={<TodayArticles />}
+                />
 
-                <Route path="/articles/:sourceSlug/:slug" element={<ArticleDetails />} />
+                <Route
+                    path="/articles/:sourceSlug/:slug"
+                    element={<ArticleDetails />}
+                />
 
                 <Route path="/search" element={<Search />} />
 

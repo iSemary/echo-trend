@@ -44,6 +44,7 @@ export default function TopItemArticles({
                         md={6}
                         lg={4}
                         imageHeight={210}
+                        className="mb-4"
                     />
                 ))}
             </Row>

@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ImageLoader from "../../../Helpers/Loaders/ImageLoader";
-export const Heading = ({ article, showCategory, lg, md,sm, imageHeight }) => {
+export const Heading = ({
+    article,
+    showCategory,
+    lg,
+    md,
+    sm,
+    imageHeight,
+    className,
+    showPublishInfo = true,
+}) => {
     const [imageLoaded, setImageLoaded] = useState(false);
 
     return (
-        <Col lg={lg} md={md} sm={sm} className="position-relative heading-item mb-4">
+        <Col
+            lg={lg}
+            md={md}
+            sm={sm}
+            className={"position-relative heading-item " + className}
+        >
             {showCategory && (
                 <div className="category-tag">{article?.category?.title}</div>
             )}
@@ -16,7 +30,7 @@ export const Heading = ({ article, showCategory, lg, md,sm, imageHeight }) => {
             >
                 <Card className="heading-image position-relative">
                     <div
-                    className="text-center"
+                        className="text-center"
                         style={{ display: imageLoaded ? "none" : "block" }}
                     >
                         <ImageLoader height={imageHeight} />
@@ -37,12 +51,15 @@ export const Heading = ({ article, showCategory, lg, md,sm, imageHeight }) => {
                                 ? article.title.substring(0, 100) + "..."
                                 : article.title}
                         </Card.Title>
-                        <p className="publish-details">
-                            {article.published_at} <br />
-                            {article.author.name.length > 25
-                                ? article.author.name.substring(0, 25) + "..."
-                                : article.author.name}
-                        </p>
+                        {showPublishInfo && (
+                            <p className="publish-details">
+                                {article.published_at} <br />
+                                {article.author.name.length > 25
+                                    ? article.author.name.substring(0, 25) +
+                                      "..."
+                                    : article.author.name}
+                            </p>
+                        )}
                     </Card.Body>
                 </Card>
             </Link>

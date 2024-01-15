@@ -54,4 +54,7 @@ class ArticleController extends ApiController {
         $articles = new ArticlesCollection($articles);
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
+
+    public function todayArticles(): JsonResponse {
+    }
 }

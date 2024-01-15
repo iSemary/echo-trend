@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Image, Card } from "react-bootstrap";
+import {  Row, Col, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import AxiosConfig from "../config/AxiosConfig";
 import ArticleDetailsLoader from "../Helpers/Loaders/ArticleDetailsLoader";
@@ -115,6 +115,7 @@ export const ArticleDetails = () => {
                                 sm={12}
                                 md={6}
                                 lg={4}
+                                className="mb-4"
                             />
                         ))}
                     </Row>

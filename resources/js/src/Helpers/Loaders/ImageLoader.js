@@ -2,7 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 import styleVariables from "../../assets/styles/variables/variables.module.scss";
 
-const ImageLoader = (imageHeight) => {
+const ImageLoader = ({imageHeight}) => {
     return (
         <ContentLoader
             viewBox="0 0 500 400"
