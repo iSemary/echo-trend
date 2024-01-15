@@ -62,4 +62,12 @@ class User extends Authenticatable {
             }
         }
     }
+
+    public static function recordUserViewItem(int $userId, int $itemId, int $itemTypeId): void {
+        UserView::updateOrCreate([
+            'user_id' => $userId,
+            'item_id' => $itemId,
+            'item_type_id' => $itemTypeId,
+        ]);
+    }
 }
