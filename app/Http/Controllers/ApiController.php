@@ -56,9 +56,9 @@ class ApiController extends Controller {
     /**
      * Get the authenticated user from the API guard.
      *
-     * @return User The authenticated user
+     * @return User|null The authenticated user
      */
-    public function getAuthenticatedUser(): User {
+    public function getAuthenticatedUser(): ?User {
         return auth()->guard('api')->user();
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Support\Facades\Route;
+use modules\Article\Http\Controllers\Api\ArticleController;
 
 /**
  * Please note that file doesn't contain all the APIs on the application
@@ -12,3 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 // Home API
 Route::get("/", [HomeController::class, "index"]);
+
+// Search API
+Route::get("search", [ArticleController::class, "find"]);
+
+// Deeply Search API
+Route::get("search/deeply", [ArticleController::class, "findDeeply"]);

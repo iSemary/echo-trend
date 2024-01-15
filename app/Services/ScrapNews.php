@@ -2,12 +2,22 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
+use App\Interfaces\ProviderInterface;
 use modules\Provider\Entities\Provider;
 
 class ScrapNews {
-
     public function run() {
         $providers = Provider::get();
+        foreach ($providers as $provider) {
+            if (in_array($provider->name, ProviderInterface::PROVIDERS)) {
+                $providerClass = $provider->class_name;
+                if (class_exists($providerClass)) {
+                    $providerService = new $providerClass($provider);
+                    if (method_exists($providerService, 'fetch')) {
+                        $providerService->fetch();
+                    }
+                }
+            }
+        }
     }
 }
