@@ -11,6 +11,7 @@ class ScrapNews {
         foreach ($providers as $provider) {
             if (in_array($provider->name, ProviderInterface::PROVIDERS)) {
                 $providerClass = $provider->class_name;
+                // For example: App\Services\Providers\NewsAPI;
                 if (class_exists($providerClass)) {
                     $providerService = new $providerClass($provider);
                     if (method_exists($providerService, 'fetch')) {

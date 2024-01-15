@@ -94,12 +94,12 @@ const TopHeading = () => {
             <Row>
                 {/* Big Article */}
                 {articles.length > 0 && (
-                    <Heading article={articles[0]} lg={6} md={12} />
+                    <Heading article={articles[0]} showCategory={true} lg={6} md={12} />
                 )}
 
                 {/* Smaller Articles */}
                 {articles.slice(1, 4).map((article) => (
-                    <Heading article={article} lg={4} md={6} />
+                    <Heading article={article} showCategory={true} lg={4} md={6} />
                 ))}
             </Row>
         </div>

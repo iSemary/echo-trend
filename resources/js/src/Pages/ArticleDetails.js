@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Card } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AxiosConfig from "../config/AxiosConfig";
 import ArticleDetailsLoader from "../Helpers/Loaders/ArticleDetailsLoader";
 import ArticleNotFound from "./Articles/ArticleNotFound";
+import { Heading } from "./Articles/Templates/Heading";
 
 export const ArticleDetails = () => {
-    const { slug } = useParams();
+    const { sourceSlug, slug } = useParams();
 
     const [article, setArticle] = useState(null);
     const [relatedArticles, setRelatedArticles] = useState([]);
@@ -14,12 +15,17 @@ export const ArticleDetails = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        AxiosConfig.get(`/articles/${slug}`)
-            .then((response) => {})
+        AxiosConfig.get(`/articles/${sourceSlug}/${slug}`)
+            .then((response) => {
+                setArticle(response.data.data.article);
+                setRelatedArticles(response.data.data.related_articles);
+                setLoading(false);
+            })
             .catch((error) => {
+                setLoading(false);
                 console.error(error);
             });
-    }, [slug]);
+    }, [sourceSlug, slug]);
 
     if (loading) {
         return <ArticleDetailsLoader />;
@@ -30,36 +36,90 @@ export const ArticleDetails = () => {
     }
 
     return (
-        <Container className="mt-5">
+        <div className="article-page mt-5">
             <Row>
-                <Col md={8}>
-                    <Image src={article.image} alt={article.title} fluid />
-                    <h2 className="mt-4">{article.title}</h2>
-                    <p>Author: {article.author}</p>
-                    <p>Category: {article.category}</p>
-                    <p>Source: {article.source}</p>
-                    <p>Published at: {article.publishedAt}</p>
-                    <Card className="mt-3">
-                        <Card.Body
-                            dangerouslySetInnerHTML={{
-                                __html: article.content,
-                            }}
-                        />
-                    </Card>
-                </Col>
-                <Col md={4}>
-                    <h3 className="mb-3">Related Articles</h3>
-                    <ul>
-                        {relatedArticles && relatedArticles.length && relatedArticles.map((relatedArticle) => (
-                            <li key={relatedArticle.id}>
-                                <a href={`/article/${relatedArticle.slug}`}>
-                                    {relatedArticle.title}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                <Col md={12}>
+                    <h2>{article.title}</h2>
+                    <p className="mt-2">{article.description}</p>
+                    <div>
+                        <Link
+                            to={`/sources/${article?.source?.slug}/articles`}
+                            className="highlight-link"
+                        >
+                            <h4>{article?.source?.title}</h4>
+                        </Link>
+                        <h6>{article?.source?.description}</h6>
+                        {/*  */}
+                        <div className="article-author">
+                            <span>
+                                On&nbsp;&nbsp;<i>{article.published_at}</i>
+                                &nbsp;&nbsp;
+                            </span>
+                            <span>
+                                <Link
+                                    to={`/authors/${article?.author?.slug}/articles`}
+                                    className="highlight-link"
+                                >
+                                    {article.author.name}
+                                </Link>
+                            </span>
+                            <span> Wrote:</span>
+                        </div>
+                    </div>
+
+                    <Image
+                        className="mt-2"
+                        src={article.image}
+                        alt={article.title}
+                        fluid
+                    />
+
+                    <div
+                        className="mt-2"
+                        dangerouslySetInnerHTML={{
+                            __html: article.body,
+                        }}
+                    ></div>
+                    <div className="mt-2">
+                        <a
+                            href={article.reference_url}
+                            className="highlight-link"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Read the full article
+                        </a>
+                    </div>
+                    <div className="mt-2">
+                        Tag:{" "}
+                        <Link
+                            to={`/categories/${article?.category?.slug}/articles`}
+                            className="highlight-link"
+                        >
+                            {article?.category?.title}
+                        </Link>
+                    </div>
                 </Col>
             </Row>
-        </Container>
+
+            {relatedArticles && relatedArticles.length > 0 && (
+                <div className="related-articles">
+                    <hr />
+                    <h3 className="mb-2">Related Articles</h3>
+                    <Row className="mt-3">
+                        {relatedArticles.map((relatedArticle, index) => (
+                            <Heading
+                                key={index}
+                                showCategory={false}
+                                article={relatedArticle}
+                                sm={12}
+                                md={6}
+                                lg={4}
+                            />
+                        ))}
+                    </Row>
+                </div>
+            )}
+        </div>
     );
 };

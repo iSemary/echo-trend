@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import ScrollToTop from "../Helpers/Utilities/ScrollToTop";
 import Home from "../Pages/Home";
 import NotFound from "../Pages/NotFound";
 import Register from "../Pages/Authentication/Register";
@@ -14,6 +15,7 @@ import { ArticleDetails } from "../Pages/ArticleDetails";
 function Router(props) {
     return (
         <div className="content">
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
@@ -28,9 +30,12 @@ function Router(props) {
                     path="/authors/:slug/articles"
                     element={<AuthorArticles />}
                 />
-                <Route path="/sources/:slug/articles" element={<SourceArticles />}/>
+                <Route
+                    path="/sources/:slug/articles"
+                    element={<SourceArticles />}
+                />
 
-                <Route path="/articles/:slug" element={<ArticleDetails />} />
+                <Route path="/articles/:sourceSlug/:slug" element={<ArticleDetails />} />
 
                 <Route path="/search" element={<Search />} />
 

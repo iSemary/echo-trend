@@ -6,6 +6,8 @@ use App\Http\Controllers\ApiController;
 use App\Interfaces\ItemsInterface;
 use Illuminate\Http\JsonResponse;
 use modules\Article\Entities\Article;
+use modules\Article\Transformers\ArticlesCollection;
+use modules\Article\Transformers\ArticlesResource;
 use modules\Author\Entities\Author;
 
 class AuthorController extends ApiController {
@@ -15,8 +17,9 @@ class AuthorController extends ApiController {
         return $this->return(200, "Authors fetched successfully", ['authors' => $authors]);
     }
 
-    public function articles(string $authorSlug): JsonResponse {
-        $articles = Article::withArticleRelations()->byRelatedItemSlug($authorSlug, ItemsInterface::AUTHOR, ItemsInterface::AUTHOR_KEY)->paginate(20);
+    public function articles(string $sourceSlug, string $authorSlug): JsonResponse {
+        $articles = Article::withArticleRelations()->bySourceAndAuthorSlug($sourceSlug, $authorSlug)->paginate(20);
+        $articles = new ArticlesCollection($articles);
         return $this->return(200, "Author articles fetched successfully", ['articles' => $articles]);
     }
 }

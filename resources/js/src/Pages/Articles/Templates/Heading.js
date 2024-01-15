@@ -1,23 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-export const Heading = ({ article, lg, md, sm }) => {
+import ImageLoader from "../../../Helpers/Loaders/ImageLoader";
+export const Heading = ({ article, showCategory, lg, md,sm, imageHeight }) => {
+    const [imageLoaded, setImageLoaded] = useState(false);
+
     return (
-        <Col lg={lg} md={md} className="position-relative heading-item mb-4">
-            <div className="category-tag">{article?.category?.title}</div>
+        <Col lg={lg} md={md} sm={sm} className="position-relative heading-item mb-4">
+            {showCategory && (
+                <div className="category-tag">{article?.category?.title}</div>
+            )}
             <Link
-                to={`/articles/${article.slug}`}
+                to={`/articles/${article?.source?.slug}/${article.slug}`}
                 className="text-decoration-none"
             >
-                <Card className="position-relative">
-                    <Card.Img variant="top" src={article.image} />
+                <Card className="heading-image position-relative">
+                    <div
+                    className="text-center"
+                        style={{ display: imageLoaded ? "none" : "block" }}
+                    >
+                        <ImageLoader height={imageHeight} />
+                    </div>
+                    <div style={{ display: imageLoaded ? "block" : "none" }}>
+                        <Card.Img
+                            variant="top"
+                            src={article.image}
+                            height={imageHeight}
+                            onLoad={(e) => {
+                                setImageLoaded(true);
+                            }}
+                        />
+                    </div>
                     <Card.Body className="position-absolute bottom-0 start-0 end-0">
                         <Card.Title className="text-white py-3">
-                            {article.title}
+                            {article.title.length > 100
+                                ? article.title.substring(0, 100) + "..."
+                                : article.title}
                         </Card.Title>
                         <p className="publish-details">
                             {article.published_at} <br />
-                            {article.author.name}
+                            {article.author.name.length > 25
+                                ? article.author.name.substring(0, 25) + "..."
+                                : article.author.name}
                         </p>
                     </Card.Body>
                 </Card>

@@ -6,6 +6,8 @@ use App\Http\Controllers\ApiController;
 use App\Interfaces\ItemsInterface;
 use Illuminate\Http\JsonResponse;
 use modules\Article\Entities\Article;
+use modules\Article\Transformers\ArticlesCollection;
+use modules\Article\Transformers\ArticlesResource;
 use modules\Source\Entities\Source;
 
 class SourceController extends ApiController {
@@ -17,6 +19,7 @@ class SourceController extends ApiController {
 
     public function articles(string $sourceSlug): JsonResponse {
         $articles = Article::withArticleRelations()->byRelatedItemSlug($sourceSlug, ItemsInterface::SOURCE, ItemsInterface::SOURCE_KEY)->paginate(20);
+        $articles = new ArticlesCollection($articles);
         return $this->return(200, "Source articles fetched successfully", ['articles' => $articles]);
     }
 }

@@ -9,11 +9,17 @@ body {
     color: $accentColor;
 }
 
+.highlight-link {
+    color: $whiteColor;
+    text-decoration-color: $primaryColor;
+}
+.f-12 {
+    font-size: 12px;
+}
 .spin-icon {
     font-size: 20px;
     animation: spin 350ms linear infinite;
 }
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -212,7 +218,9 @@ footer {
     }
 }
 
-.top-heading {
+.top-heading,
+.related-articles,
+.top-articles {
     .heading-item {
         .card-img-top {
             filter: contrast(0.7);
@@ -233,5 +241,19 @@ footer {
             padding: 5px;
             z-index: 1;
         }
+
+        .heading-image {
+            background-color: $secondaryColor;
+        }
+    }
+}
+
+/**
+    Article Page
+**/
+.article-page {
+    .article-author {
+        border-left: 2px solid $primaryColor;
+        padding-left: 5px;
     }
 }
