@@ -64,4 +64,9 @@ class Article extends Model {
     public function scopeWithArticleRelations(Builder $query): Builder {
         return $query->with(['language', 'country', 'source', 'author', 'category', 'provider']);
     }
+
+    public function scopeByRelatedItemSlug(Builder $query, string $itemSlug, string $itemTable, string $itemForeignKey): Builder {
+        return $query->leftJoin($itemTable, $itemTable . '.id', 'articles.' . $itemForeignKey)
+            ->where($itemTable . '.slug', $itemSlug);
+    }
 }
