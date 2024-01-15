@@ -16,20 +16,10 @@ use modules\Source\Entities\Source;
 class Article extends Model {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'title',
-        'slug',
-        'description',
-        'reference_url',
-        'body',
-        'image',
-        'provider_id',
-        'source_id',
-        'category_id',
-        'author_id',
-        'language_id',
-        'published_at',
-    ];
+    public static $elasticIndex = "EchoTrendArticles";
+    public static $elasticType = "EchoTrendArticlesOwner";
+
+    protected $fillable = ['title', 'slug', 'description', 'reference_url', 'body', 'image', 'provider_id', 'source_id', 'category_id', 'author_id', 'language_id', 'published_at'];
 
     public function language() {
         return $this->belongsTo(Language::class, 'language_id');

@@ -3,10 +3,12 @@
 namespace modules\Article\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Http\JsonResponse;
 use modules\Article\Entities\Article;
 use modules\Article\Transformers\ArticleResource;
 use modules\User\Interfaces\UserViewsTypes;
+use modules\Article\Http\Requests\SearchRequest;
 
 class ArticleController extends ApiController {
 
@@ -22,5 +24,28 @@ class ArticleController extends ApiController {
         // Filter article object
         $article = new ArticleResource($article);
         return $this->return(200, "Article fetched successfully", ['article' => $article]);
+    }
+
+    public function find(SearchRequest $searchRequest): JsonResponse {
+        $searchRequest = $searchRequest->validated();
+        $keyword = $searchRequest['keyword'];
+
+        $articles = Article::withArticleRelations()->where("title", "like", "%" . $keyword . "%")
+            ->orWhere("description", "like", "%" . $keyword . "%")
+            ->paginate(20);
+
+        return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
+    }
+
+    public function findDeeply(SearchRequest $searchRequest): JsonResponse {
+        $searchRequest = $searchRequest->validated();
+        $keyword = $searchRequest['keyword'];
+
+        $articles = Article::withArticleRelations()->where("title", "like", "%" . $keyword . "%")
+            ->orWhere("description", "like", "%" . $keyword . "%")
+            ->orWhere("body", "like", "%" . $keyword . "%")
+            ->paginate(20);
+
+        return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
 }
