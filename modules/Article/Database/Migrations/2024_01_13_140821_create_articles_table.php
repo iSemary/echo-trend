@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->integer('category_id');
             $table->integer('author_id');
             $table->integer('language_id');
-            $table->timestamp('published_at')->nullable();
+            $table->integer('published_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

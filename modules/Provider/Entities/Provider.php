@@ -11,5 +11,5 @@ class Provider extends Model {
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['name', 'api_key', 'fetched_at'];
+    protected $fillable = ['name', 'class_name', 'end_point', 'api_key', 'fetched_at'];
 }

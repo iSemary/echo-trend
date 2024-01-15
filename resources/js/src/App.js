@@ -33,12 +33,20 @@ function App() {
 
     useEffect(() => {
         // TODO use redux
-        AxiosConfig.get("/categories").then((response) => {
-            setCategories(response.data.data.categories);
-        });
-        AxiosConfig.get("/sources").then((response) => {
-            setSources(response.data.data.sources);
-        });
+        AxiosConfig.get("/categories")
+            .then((response) => {
+                setCategories(response.data.data.categories);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        AxiosConfig.get("/sources")
+            .then((response) => {
+                setSources(response.data.data.sources);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }, []);
 
     return (
