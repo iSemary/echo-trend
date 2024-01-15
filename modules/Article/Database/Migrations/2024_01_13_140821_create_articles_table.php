@@ -13,10 +13,11 @@ return new class extends Migration {
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
-            $table->string('description', 1024);
-            $table->string('reference_url', 255)->nullable();
+            $table->string('description', 1024)->nullable();
+            $table->string('reference_url', 1024)->nullable();
             $table->longText('body');
             $table->string('image', 255)->nullable();
+            $table->boolean('is_head')->default(0);
             $table->integer('provider_id');
             $table->integer('source_id');
             $table->integer('category_id');

@@ -19,26 +19,26 @@ class Article extends Model {
     public static $elasticIndex = "EchoTrendArticles";
     public static $elasticType = "EchoTrendArticlesOwner";
 
-    protected $fillable = ['title', 'slug', 'description', 'reference_url', 'body', 'image', 'provider_id', 'source_id', 'category_id', 'author_id', 'language_id', 'published_at'];
+    protected $fillable = ['title', 'slug', 'description', 'reference_url', 'body', 'image', 'is_head', 'provider_id', 'source_id', 'category_id', 'author_id', 'language_id', 'published_at'];
 
     public function language() {
-        return $this->belongsTo(Language::class, 'language_id');
+        return $this->belongsTo(Language::class);
     }
 
     public function country() {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->belongsTo(Country::class);
     }
 
     public function source() {
-        return $this->belongsTo(Source::class, 'source_id');
+        return $this->belongsTo(Source::class);
     }
 
     public function author() {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(Author::class);
     }
 
     public function category() {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     public function provider() {
@@ -49,6 +49,13 @@ class Article extends Model {
         return $query->leftJoin('sources', 'sources.id', 'articles.source_id')
             ->where('sources.slug', $sourceSlug)
             ->where('articles.slug', $articleSlug);
+    }
+
+    public function scopeBySourceAndAuthorSlug(Builder $query, string $sourceSlug, string $authorSlug): Builder {
+        return $query->leftJoin('sources', 'sources.id', 'articles.source_id')
+            ->leftJoin('authors', 'authors.source_id', 'sources.id')
+            ->where('sources.slug', $sourceSlug)
+            ->where('authors.slug', $authorSlug);
     }
 
     public function scopeWithArticleRelations(Builder $query): Builder {

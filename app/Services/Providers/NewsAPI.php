@@ -31,7 +31,7 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function fetchSources(): void {
-        $response = Http::get($this->endPoint . '/sources', ['apiKey' => $this->apiKey]);
+        $response = Http::timeout(30)->get($this->endPoint . '/sources', ['apiKey' => $this->apiKey]);
         if ($response->successful()) {
             $data = $response->json();
             $fetchedSources = $data['sources'];
@@ -46,7 +46,7 @@ class NewsAPI extends ProviderAbstractor {
         $separatedSources = Source::select("slug")->inRandomOrder()->limit(3)->pluck('slug')->toArray();
         $separatedSources = implode(', ', $separatedSources);
 
-        $response = Http::get($this->endPoint . '/everything', ['apiKey' => $this->apiKey, 'sources' => $separatedSources]);
+        $response = Http::timeout(30)->get($this->endPoint . '/everything', ['apiKey' => $this->apiKey, 'sources' => $separatedSources]);
         if ($response->successful()) {
             $data = $response->json();
             $fetchedArticles = $data['articles'];
@@ -64,11 +64,20 @@ class NewsAPI extends ProviderAbstractor {
                 if (isset($article['source'])) {
                     $source = Source::updateOrCreate([
                         'title' => $article['source']['name'],
-                        'slug' => $article['source']['id'],
+                        'slug' => !empty($article['source']['id']) ? $article['source']['id'] : Str::slug($article['source']['name']),
                     ]);
                 }
 
-                $author = Author::updateOrCreate(['name' => $article['author'], 'slug' => Str::slug($article['author']), 'source_id' => $source->id]);
+                $defaultAuthorName = $source->title . " Author";
+                $author = Author::updateOrCreate(
+                    [
+                        'name' => $article['author'] && !empty($article['author']) ? $article['author'] : $defaultAuthorName,
+                        'slug' => $article['author'] && !empty($article['author']) ? Str::slug($article['author']) : Str::slug($defaultAuthorName),
+                    ],
+                    [
+                        'source_id' => $source->id
+                    ]
+                );
 
                 Article::updateOrCreate([
                     'title' => $article['title'],
@@ -119,8 +128,8 @@ class NewsAPI extends ProviderAbstractor {
                     'title' => $source['name'],
                     'slug' => Str::slug($source['name']),
                 ], [
-                    'description' => $source['description'],
                     'url' => $source['url'],
+                    'description' => $source['description'],
                     'category_id' => $category->id,
                     'country_id' => $country->id,
                     'language_id' => $language->id,

@@ -3,12 +3,13 @@
 namespace modules\Article\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Http\JsonResponse;
 use modules\Article\Entities\Article;
 use modules\Article\Transformers\ArticleResource;
 use modules\User\Interfaces\UserViewsTypes;
 use modules\Article\Http\Requests\SearchRequest;
+use modules\Article\Transformers\ArticlesCollection;
+use modules\Article\Transformers\ArticlesResource;
 
 class ArticleController extends ApiController {
 
@@ -23,7 +24,11 @@ class ArticleController extends ApiController {
         if ($user) $user->recordUserViewItem($user->id, $article->id, UserViewsTypes::ARTICLE);
         // Filter article object
         $article = new ArticleResource($article);
-        return $this->return(200, "Article fetched successfully", ['article' => $article]);
+        // Get Related Articles based on this article's category and source
+        $relatedArticles = Article::withArticleRelations()->whereCategoryId($article->category_id)->whereSourceId($article->source_id)->inRandomOrder()->limit(8)->get();
+        // Filter the collection
+        $relatedArticles = new ArticlesCollection($relatedArticles);
+        return $this->return(200, "Article fetched successfully", ['article' => $article, 'related_articles' => $relatedArticles]);
     }
 
     public function find(SearchRequest $searchRequest): JsonResponse {
@@ -33,6 +38,7 @@ class ArticleController extends ApiController {
         $articles = Article::withArticleRelations()->where("title", "like", "%" . $keyword . "%")
             ->orWhere("description", "like", "%" . $keyword . "%")
             ->paginate(20);
+        $articles = new ArticlesCollection($articles);
 
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
@@ -45,7 +51,7 @@ class ArticleController extends ApiController {
             ->orWhere("description", "like", "%" . $keyword . "%")
             ->orWhere("body", "like", "%" . $keyword . "%")
             ->paginate(20);
-
+        $articles = new ArticlesCollection($articles);
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
 }
