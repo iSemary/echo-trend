@@ -20,8 +20,10 @@ Route::get("top-news", [HomeController::class, "topNews"]);
 // Random Category Articles
 Route::get("random/category/articles", [HomeController::class, "randomCategoryArticles"]);
 
-// Articles By Location
-Route::get("articles/location", [HomeController::class, "locationArticles"]);
+// User preferred news
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get("preferred/articles", [HomeController::class, "preferredArticles"]);
+});
 
 // Today's news
 Route::get("today", [ArticleController::class, "todayArticles"]);

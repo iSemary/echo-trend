@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 use modules\Article\Entities\Article;
 use modules\Article\Transformers\ArticlesResource;
 use modules\Category\Entities\Category;
+use modules\User\Entities\UserInterest;
+use modules\User\Interfaces\UserInterestTypes;
 use stdClass;
 
 class HomeController extends ApiController {
@@ -23,10 +25,10 @@ class HomeController extends ApiController {
         return $this->return(200, "Top headings fetched successfully", ['articles' => $topNews]);
     }
 
-    public function locationArticles(): JsonResponse {
-        $locationArticles = $this->getArticlesByLocation();
-        $locationArticles = ArticlesResource::collection($locationArticles);
-        return $this->return(200, "Top headings fetched successfully", ['articles' => $locationArticles]);
+
+    public function preferredArticles(): JsonResponse {
+        $preferredArticles = $this->getPreferredArticles();
+        return $this->return(200, "Preferred articles fetched successfully", ['articles' => $preferredArticles]);
     }
 
     public function randomCategoryArticles(): JsonResponse {
@@ -36,26 +38,47 @@ class HomeController extends ApiController {
         return $this->return(200, "Top headings fetched successfully", ['articles' => $randomArticles, 'category' => $randomCategory]);
     }
 
-    private function getArticlesByLocation(): Collection {
-        // If authenticated user, get the location from the user
-        // Else get from front end side
+    private function getPreferredArticles(): array {
+        $user = $this->getAuthenticatedUser();
+        $combinedArticles = [
+            'sources' => Article::getPreferredSourceArticles($user->id),
+            'authors' => Article::getPreferredAuthorArticles($user->id),
+            'categories' => Article::getPreferredCategoryArticles($user->id),
+        ];
+        return $combinedArticles;
     }
 
-
+    // If auth then get from the prefer categories and sources
     private function getTopHeadings(): Collection {
-        // TODO If auth then get from the prefer categories and sources
-        return Article::withArticleRelations()->where("is_head", 1)->orderByDesc("published_at")->limit(5)->get();
+        $user = $this->getAuthenticatedUser();
+        $categoryIds = $user ? UserInterest::getItemIds($user->id, UserInterestTypes::CATEGORY) : [];
+        return Article::withArticleRelations()->where("is_head", 1)
+            ->when($categoryIds, function ($query) use ($categoryIds) {
+                return $query->whereIn('category_id', $categoryIds);
+            })->orderByDesc("published_at")->limit(5)->get();
     }
 
-
+    // If auth then get from the prefer categories and sources
     private function getTopNews(): Collection {
-        // TODO If auth then get from the prefer categories and sources
-        return Article::withArticleRelations()->where("is_head", 0)->orderByDesc("published_at")->limit(8)->get();
+        $user = $this->getAuthenticatedUser();
+        $categoryIds = $user ? UserInterest::getItemIds($user->id, UserInterestTypes::CATEGORY) : [];
+        return Article::withArticleRelations()->where("is_head", 0)
+            ->when($categoryIds, function ($query) use ($categoryIds) {
+                return $query->whereIn('category_id', $categoryIds);
+            })->orderByDesc("published_at")->limit(8)->get();
     }
 
+    // If auth then get from the prefer categories else get random category
     private function getRandomCategory(): ?Category {
-        // TODO If auth then get from the prefer categories 
-        return Category::with('articles')->select(['id', 'title', 'slug'])->inRandomOrder()->first();
+        $user = $this->getAuthenticatedUser();
+        $categoryIds = $user ? UserInterest::getItemIds($user->id, UserInterestTypes::CATEGORY) : [];
+
+        return Category::with('articles')->when($categoryIds, function ($query) use ($categoryIds) {
+            return $query->whereIn('id', $categoryIds);
+        })
+            ->select(['id', 'title', 'slug'])
+            ->inRandomOrder()
+            ->first();
     }
 
     private function getCategoryArticles(Category $category): Collection {

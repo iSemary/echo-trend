@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import AxiosConfig from "../config/AxiosConfig";
+import ResourcesViewer from "./PagesTemplate/ResourcesViewer";
 
 const SourceArticles = () => {
     const { slug } = useParams();
-
-    useEffect(() => {
-        AxiosConfig.get(`/sources/${slug}/articles`)
-            .then((response) => {})
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [slug]);
-
-    return slug;
+    return (
+        <ResourcesViewer
+            endPoint={`/sources/${slug}/articles`}
+            slug={slug}
+            type="Source"
+            objectKeyName="source"
+            objectKeyValue="title"
+        />
+    );
 };
 
 export default SourceArticles;

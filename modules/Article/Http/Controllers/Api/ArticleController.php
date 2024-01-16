@@ -3,7 +3,9 @@
 namespace modules\Article\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use modules\Article\Entities\Article;
 use modules\Article\Transformers\ArticleResource;
 use modules\User\Interfaces\UserViewsTypes;
@@ -56,5 +58,13 @@ class ArticleController extends ApiController {
     }
 
     public function todayArticles(): JsonResponse {
+        $today = Carbon::today();
+        $articles = Article::withArticleRelations()->whereDate(
+            DB::raw('FROM_UNIXTIME(published_at)'),
+            '=',
+            $today->toDateString()
+        )->paginate(20);
+        $articles = new ArticlesCollection($articles);
+        return $this->return(200, "Today's articles fetched successfully", ['articles' => $articles]);
     }
 }

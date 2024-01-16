@@ -18,7 +18,7 @@ function Router({ user }) {
         <div className="content">
             <ScrollToTop />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home user={user} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
@@ -28,7 +28,7 @@ function Router({ user }) {
                     element={<CategoryArticles />}
                 />
                 <Route
-                    path="/authors/:slug/articles"
+                    path="/authors/:sourceSlug/:slug/articles"
                     element={<AuthorArticles />}
                 />
                 <Route

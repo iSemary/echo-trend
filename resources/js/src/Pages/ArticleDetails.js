@@ -68,7 +68,7 @@ export const ArticleDetails = () => {
                                     </span>
                                     <span>
                                         <Link
-                                            to={`/authors/${article?.author?.slug}/articles`}
+                                            to={`/authors/${article?.source?.slug}/${article?.author?.slug}/articles`}
                                             className="highlight-link"
                                         >
                                             {article.author.name}

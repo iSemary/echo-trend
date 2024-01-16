@@ -103,6 +103,13 @@ body {
     background-color: transparent;
 }
 
+// Fix intl phone number selector conflicts
+.intl-tel-input .country-list{
+    background-color: $darkGrayColor;
+    z-index: 3;
+}
+
+
 header {
     background-color: $secondaryColor;
     .navbar {
@@ -229,6 +236,7 @@ footer {
             color: #fff;
             border-left: 2px solid $primaryColor;
             padding-left: 6px;
+            text-align: left;
         }
 
         .category-tag {

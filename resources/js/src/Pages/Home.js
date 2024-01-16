@@ -3,8 +3,9 @@ import { Container } from "react-bootstrap";
 import TopHeading from "./Articles/TopHeading";
 import TopNews from "./Articles/TopNews";
 import RandomCategoryNews from "./Articles/RandomCategoryNews";
+import UserPreferredArticles from "./Articles/UserPreferredArticles";
 
-const Home = () => {
+const Home = ({ user }) => {
     /**
      * Show the publisher info for small article boxes on small screens
      */
@@ -27,6 +28,8 @@ const Home = () => {
             <TopNews showPublishInfo={showPublishInfo} />
             <hr />
             <RandomCategoryNews showPublishInfo={showPublishInfo} />
+            <hr />
+            {user && <UserPreferredArticles />}
         </Container>
     );
 };

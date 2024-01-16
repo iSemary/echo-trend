@@ -40,7 +40,6 @@ const RandomCategoryNews = ({ showPublishInfo }) => {
                                 <Heading
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -56,7 +55,6 @@ const RandomCategoryNews = ({ showPublishInfo }) => {
                                 <ExtendedArticle
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -68,7 +66,6 @@ const RandomCategoryNews = ({ showPublishInfo }) => {
                                 <WideArticle
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -84,7 +81,6 @@ const RandomCategoryNews = ({ showPublishInfo }) => {
                                 <Heading
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
