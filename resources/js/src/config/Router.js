@@ -13,7 +13,7 @@ import Search from "../Pages/Search";
 import { ArticleDetails } from "../Pages/ArticleDetails";
 import TodayArticles from "../Pages/TodayArticles";
 
-function Router(props) {
+function Router({ user }) {
     return (
         <div className="content">
             <ScrollToTop />
@@ -35,11 +35,8 @@ function Router(props) {
                     path="/sources/:slug/articles"
                     element={<SourceArticles />}
                 />
-                
-                <Route
-                    path="/today"
-                    element={<TodayArticles />}
-                />
+
+                <Route path="/today" element={<TodayArticles />} />
 
                 <Route
                     path="/articles/:sourceSlug/:slug"

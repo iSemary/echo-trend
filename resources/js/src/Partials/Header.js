@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import { FaFire } from "react-icons/fa6";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
-import AxiosConfig from "../config/AxiosConfig";
-import { Token } from "../Helpers/Authentication/Token";
 import { SearchContainer } from "../Helpers/Search/SearchContainer";
 import { FaSearch } from "react-icons/fa";
+import LoggedIn from "./Header/LoggedIn";
+import LoggedOut from "./Header/LoggedOut";
 
 const Header = ({ user, loadingUser, categories, sources }) => {
-    const CURRENT_SESSION = 1;
-
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [session, setSession] = useState(1);
 
-    const handleLogout = () => {
-        AxiosConfig.post("/auth/logout", { type: CURRENT_SESSION })
-            .then((response) => {
-                Token.explode();
-            })
-            .catch((error) => console.error(error));
-    };
+    useEffect(() => {
+        if (loadingUser) {
+            setSession(1);
+        } else {
+            if (user) {
+                setSession(2);
+            } else {
+                setSession(3);
+            }
+        }
+    }, [loadingUser, user]);
 
     return (
         <header>
@@ -67,48 +70,21 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                     >
                         <FaSearch />
                     </button>
-                    {loadingUser ? (
-                        <CgSpinnerTwoAlt className="spin-icon" />
-                    ) : user ? (
-                        <>
-                            <Link
-                                to="/profile"
-                                className="nav-link"
-                                aria-label="profile"
-                            >
-                                {user.full_name}
-                            </Link>
-                            <button
-                                className="btn nav-link"
-                                aria-label="logout"
-                                type="button"
-                                onClick={handleLogout}
-                            >
-                                Logout
-                            </button>
-                        </>
+                    {session === 1 ? (
+                        <CgSpinnerTwoAlt className="spin-icon my-3" />
+                    ) : session === 2 ? (
+                        <LoggedIn user={user} setSession={setSession} />
                     ) : (
-                        <>
-                            <Link
-                                to="/login"
-                                className="nav-link"
-                                aria-label="login"
-                            >
-                                Login
-                            </Link>
-                            <Link
-                                to="/register"
-                                className="nav-link"
-                                aria-label="create an account"
-                            >
-                                Create an account
-                            </Link>
-                        </>
+                        <LoggedOut />
                     )}
                 </Nav>
             </Navbar>
 
-            <SearchContainer categories={categories} sources={sources} show={showSearchBar} />
+            <SearchContainer
+                categories={categories}
+                sources={sources}
+                show={showSearchBar}
+            />
         </header>
     );
 };

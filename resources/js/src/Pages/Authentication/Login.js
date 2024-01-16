@@ -16,8 +16,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         setLoading(true);
-        AxiosConfig
-            .post("/auth/login", { email: email, password: password })
+        AxiosConfig.post("/auth/login", { email: email, password: password })
             .then((response) => {
                 clearForm();
                 setLoading(false);
@@ -26,6 +25,7 @@ const Login = () => {
                 // Show success alert
                 ToastAlert(response.data.message, "success");
                 // Redirect to home page
+                document.location.href = "/";
             })
             .catch((error) => {
                 setLoading(false);

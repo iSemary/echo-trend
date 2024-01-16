@@ -3,9 +3,8 @@ import { Col, Row } from "react-bootstrap";
 import { Heading } from "./Templates/Heading";
 import AxiosConfig from "../../config/AxiosConfig";
 
-const TopHeading = () => {
+const TopHeading = ({ showPublishInfo }) => {
     const [topHeadings, setTopHeadings] = useState([]);
-    const [showPublishInfo, setShowPublishInfo] = useState(false);
 
     useEffect(() => {
         AxiosConfig.get("/top-headings")
@@ -15,19 +14,6 @@ const TopHeading = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
-    /**
-     * Show the publisher info for small article boxes on small screens
-     */
-    useEffect(() => {
-        const handleResize = () => {
-            setShowPublishInfo(window.innerWidth < 992);
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
     }, []);
 
     return (

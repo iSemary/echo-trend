@@ -11,17 +11,23 @@ use modules\Article\Http\Controllers\Api\ArticleController;
  * modules/Category/routes/api.php
  */
 
-// Top Headings API
-Route::get("/top-headings", [HomeController::class, "topHeadings"]);
+// Top Headings
+Route::get("top-headings", [HomeController::class, "topHeadings"]);
 
-// Top Headings API
-Route::get("/top-news", [HomeController::class, "topNews"]);
+// Top News
+Route::get("top-news", [HomeController::class, "topNews"]);
+
+// Random Category Articles
+Route::get("random/category/articles", [HomeController::class, "randomCategoryArticles"]);
+
+// Articles By Location
+Route::get("articles/location", [HomeController::class, "locationArticles"]);
 
 // Today's news
-Route::get("/today", [ArticleController::class, "todayArticles"]);
+Route::get("today", [ArticleController::class, "todayArticles"]);
 
-// Search API
+// Search
 Route::get("search", [ArticleController::class, "find"]);
 
-// Deeply Search API
+// Deeply Search
 Route::get("search/deeply", [ArticleController::class, "findDeeply"]);

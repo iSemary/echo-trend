@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import AxiosConfig from "../config/AxiosConfig";
 import ArticleDetailsLoader from "../Helpers/Loaders/ArticleDetailsLoader";
@@ -39,41 +39,47 @@ export const ArticleDetails = () => {
         <div className="article-page mt-5">
             <Row>
                 <Col md={12}>
-                    <h2>{article.title}</h2>
-                    <p className="mt-2">{article.description}</p>
-                    <div>
-                        <Link
-                            to={`/sources/${article?.source?.slug}/articles`}
-                            className="highlight-link"
-                        >
-                            <h4>{article?.source?.title}</h4>
-                        </Link>
-                        <h6>{article?.source?.description}</h6>
-                        {/*  */}
-                        <div className="article-author">
-                            <span>
-                                On&nbsp;&nbsp;<i>{article.published_at}</i>
-                                &nbsp;&nbsp;
-                            </span>
-                            <span>
+                    <Row>
+                        <Col sm={12} md={6} lg={6}>
+                            <Image
+                                className="mt-2"
+                                src={article.image}
+                                alt={article.title}
+                                fluid
+                            />
+                        </Col>
+                        <Col sm={12} md={6} lg={6}>
+                            <h2>{article.title}</h2>
+                            <p className="mt-2">{article.description}</p>
+                            <div>
                                 <Link
-                                    to={`/authors/${article?.author?.slug}/articles`}
+                                    to={`/sources/${article?.source?.slug}/articles`}
                                     className="highlight-link"
                                 >
-                                    {article.author.name}
+                                    <h4>{article?.source?.title}</h4>
                                 </Link>
-                            </span>
-                            <span> Wrote:</span>
-                        </div>
-                    </div>
-
-                    <Image
-                        className="mt-2"
-                        src={article.image}
-                        alt={article.title}
-                        fluid
-                    />
-
+                                <h6>{article?.source?.description}</h6>
+                                {/*  */}
+                                <div className="article-author">
+                                    <span>
+                                        On&nbsp;&nbsp;
+                                        <i>{article.published_at}</i>
+                                        &nbsp;&nbsp;
+                                    </span>
+                                    <span>
+                                        <Link
+                                            to={`/authors/${article?.author?.slug}/articles`}
+                                            className="highlight-link"
+                                        >
+                                            {article.author.name}
+                                        </Link>
+                                    </span>
+                                    <span> Wrote:</span>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                    <hr />
                     <div
                         className="mt-2"
                         dangerouslySetInnerHTML={{

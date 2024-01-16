@@ -28,8 +28,6 @@ class AuthController extends ApiController {
         $username = strtok($email, '@');
         // Adding username to the $userRequest array
         $userRequest['username'] = $username .  Str::random(4);
-        // Append dial code to phone number
-        $userRequest['phone'] = $userRequest['dial_code'] . $userRequest['phone'];
         // Create or update the country code if not exists
         $userRequest['country_id'] = Country::getCountryIdByCode($userRequest['country_code']);
         // Create new user record
@@ -57,6 +55,7 @@ class AuthController extends ApiController {
             // Return Success Json Response
             return $this->return(200, 'User Logged in Successfully', ['user' => $response]);
         }
+        return $this->return(400, 'Invalid email or password');
     }
 
     /**
