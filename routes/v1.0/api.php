@@ -11,11 +11,25 @@ use modules\Article\Http\Controllers\Api\ArticleController;
  * modules/Category/routes/api.php
  */
 
-// Home API
-Route::get("/", [HomeController::class, "index"]);
+// Top Headings
+Route::get("top-headings", [HomeController::class, "topHeadings"]);
 
-// Search API
+// Top News
+Route::get("top-news", [HomeController::class, "topNews"]);
+
+// Random Category Articles
+Route::get("random/category/articles", [HomeController::class, "randomCategoryArticles"]);
+
+// User preferred news
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get("preferred/articles", [HomeController::class, "preferredArticles"]);
+});
+
+// Today's news
+Route::get("today", [ArticleController::class, "todayArticles"]);
+
+// Search
 Route::get("search", [ArticleController::class, "find"]);
 
-// Deeply Search API
+// Deeply Search
 Route::get("search/deeply", [ArticleController::class, "findDeeply"]);

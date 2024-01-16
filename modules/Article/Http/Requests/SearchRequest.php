@@ -20,6 +20,9 @@ class SearchRequest extends FormRequest {
     public function rules(): array {
         return [
             'keyword' => 'required|max:1000|string',
+            'date_order' => 'sometimes|in:DESC,ASC',
+            'category_id' => 'nullable|numeric',
+            'source_id' => 'nullable|numeric',
         ];
     }
 }

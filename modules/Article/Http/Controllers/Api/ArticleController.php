@@ -3,7 +3,9 @@
 namespace modules\Article\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use modules\Article\Entities\Article;
 use modules\Article\Transformers\ArticleResource;
 use modules\User\Interfaces\UserViewsTypes;
@@ -34,9 +36,18 @@ class ArticleController extends ApiController {
     public function find(SearchRequest $searchRequest): JsonResponse {
         $searchRequest = $searchRequest->validated();
         $keyword = $searchRequest['keyword'];
+        $categoryId = $searchRequest['category_id'] ?? "";
+        $sourceId = $searchRequest['source_id'] ?? "";
 
         $articles = Article::withArticleRelations()->where("title", "like", "%" . $keyword . "%")
             ->orWhere("description", "like", "%" . $keyword . "%")
+            ->when($categoryId, function ($query) use ($categoryId) {
+                $query->where("articles.category_id", $categoryId);
+            })
+            ->when($sourceId, function ($query) use ($sourceId) {
+                $query->where("articles.source_id", $sourceId);
+            })
+            ->orderBy("published_at", $searchRequest['date_order'])
             ->paginate(20);
         $articles = new ArticlesCollection($articles);
 
@@ -53,5 +64,16 @@ class ArticleController extends ApiController {
             ->paginate(20);
         $articles = new ArticlesCollection($articles);
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
+    }
+
+    public function todayArticles(): JsonResponse {
+        $today = Carbon::today();
+        $articles = Article::withArticleRelations()->whereDate(
+            DB::raw('FROM_UNIXTIME(published_at)'),
+            '=',
+            $today->toDateString()
+        )->paginate(20);
+        $articles = new ArticlesCollection($articles);
+        return $this->return(200, "Today's articles fetched successfully", ['articles' => $articles]);
     }
 }

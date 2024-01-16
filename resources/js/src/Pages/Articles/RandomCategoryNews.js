@@ -4,13 +4,17 @@ import { Heading } from "./Templates/Heading";
 import { Col, Row } from "react-bootstrap";
 import { ExtendedArticle } from "./Templates/ExtendedArticle";
 import { WideArticle } from "./Templates/WideArticle";
+import { Link } from "react-router-dom";
 
-const TopNews = ({ showPublishInfo }) => {
-    const [topNews, setTopNews] = useState([]);
+const RandomCategoryNews = ({ showPublishInfo }) => {
+    const [articles, setArticles] = useState([]);
+    const [category, setCategory] = useState({});
+
     useEffect(() => {
-        AxiosConfig.get("/top-news")
+        AxiosConfig.get("/random/category/articles")
             .then((response) => {
-                setTopNews(response.data.data.articles);
+                setArticles(response.data.data.articles);
+                setCategory(response.data.data.category);
             })
             .catch((error) => {
                 console.error(error);
@@ -19,18 +23,23 @@ const TopNews = ({ showPublishInfo }) => {
 
     return (
         <div className="top-news">
-            <h3 className="border-left-primary mb-3">
-                Top of what happened recently
-            </h3>
-            {topNews && topNews.length > 0 && (
+            <div className="text-center mb-3">
+                <h3 className="mb-0 text-uppercase">{category?.title}</h3>
+                <Link
+                    to={`/categories/${category?.slug}/articles`}
+                    className="text-decoration-none text-white"
+                >
+                    View more articles
+                </Link>
+            </div>
+            {articles && articles.length > 0 && (
                 <Row>
                     <Col className="d-grid place-items-center" lg={3}>
                         <Row>
-                            {topNews.slice(0, 3).map((article, index) => (
+                            {articles.slice(0, 3).map((article, index) => (
                                 <Heading
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -42,11 +51,10 @@ const TopNews = ({ showPublishInfo }) => {
                     </Col>
                     <Col lg={6}>
                         <Row>
-                            {topNews.slice(3, 4).map((article, index) => (
+                            {articles.slice(3, 4).map((article, index) => (
                                 <ExtendedArticle
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -54,11 +62,10 @@ const TopNews = ({ showPublishInfo }) => {
                                     showPublishInfo={showPublishInfo}
                                 />
                             ))}
-                            {topNews.slice(4, 5).map((article, index) => (
+                            {articles.slice(4, 5).map((article, index) => (
                                 <WideArticle
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -70,11 +77,10 @@ const TopNews = ({ showPublishInfo }) => {
                     </Col>
                     <Col className="d-grid place-items-center" lg={3}>
                         <Row>
-                            {topNews.slice(5, 8).map((article, index) => (
+                            {articles.slice(5, 8).map((article, index) => (
                                 <Heading
                                     key={index}
                                     article={article}
-                                    showCategory={true}
                                     lg={12}
                                     md={12}
                                     sm={12}
@@ -90,4 +96,4 @@ const TopNews = ({ showPublishInfo }) => {
     );
 };
 
-export default TopNews;
+export default RandomCategoryNews;

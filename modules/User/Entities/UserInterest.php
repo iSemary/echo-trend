@@ -18,4 +18,11 @@ class UserInterest extends Model {
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public static function getItemIds(int $userId, int $itemTypeId): array {
+        return self::where('user_id', $userId)
+            ->where('item_type_id', $itemTypeId)
+            ->pluck("item_id")
+            ->toArray();
+    }
 }

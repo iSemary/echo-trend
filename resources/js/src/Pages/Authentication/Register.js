@@ -58,6 +58,9 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
 
+        const formData = formValues;
+        formData.phone = formValues.dial_code + formData.phone;
+
         AxiosConfig.post("/auth/register", formValues)
             .then((response) => {
                 clearForm();
@@ -67,6 +70,7 @@ const Register = () => {
                 // Show success alert
                 ToastAlert(response.data.message, "success");
                 // Redirect to home page
+                document.location.href = "/";
             })
             .catch((error) => {
                 setLoading(false);

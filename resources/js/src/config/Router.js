@@ -11,13 +11,14 @@ import AuthorArticles from "../Pages/AuthorArticles";
 import SourceArticles from "../Pages/SourceArticles";
 import Search from "../Pages/Search";
 import { ArticleDetails } from "../Pages/ArticleDetails";
+import TodayArticles from "../Pages/TodayArticles";
 
-function Router(props) {
+function Router({ user }) {
     return (
         <div className="content">
             <ScrollToTop />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home user={user} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
@@ -27,7 +28,7 @@ function Router(props) {
                     element={<CategoryArticles />}
                 />
                 <Route
-                    path="/authors/:slug/articles"
+                    path="/authors/:sourceSlug/:slug/articles"
                     element={<AuthorArticles />}
                 />
                 <Route
@@ -35,7 +36,12 @@ function Router(props) {
                     element={<SourceArticles />}
                 />
 
-                <Route path="/articles/:sourceSlug/:slug" element={<ArticleDetails />} />
+                <Route path="/today" element={<TodayArticles />} />
+
+                <Route
+                    path="/articles/:sourceSlug/:slug"
+                    element={<ArticleDetails />}
+                />
 
                 <Route path="/search" element={<Search />} />
 
