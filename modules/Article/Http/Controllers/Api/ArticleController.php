@@ -36,9 +36,18 @@ class ArticleController extends ApiController {
     public function find(SearchRequest $searchRequest): JsonResponse {
         $searchRequest = $searchRequest->validated();
         $keyword = $searchRequest['keyword'];
+        $categoryId = $searchRequest['category_id'] ?? "";
+        $sourceId = $searchRequest['source_id'] ?? "";
 
         $articles = Article::withArticleRelations()->where("title", "like", "%" . $keyword . "%")
             ->orWhere("description", "like", "%" . $keyword . "%")
+            ->when($categoryId, function ($query) use ($categoryId) {
+                $query->where("articles.category_id", $categoryId);
+            })
+            ->when($sourceId, function ($query) use ($sourceId) {
+                $query->where("articles.source_id", $sourceId);
+            })
+            ->orderBy("published_at", $searchRequest['date_order'])
             ->paginate(20);
         $articles = new ArticlesCollection($articles);
 

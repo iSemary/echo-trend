@@ -146,14 +146,21 @@ header .navbar-brand .date {
 header .search-container {
   opacity: 0;
   max-height: 0;
-  overflow: hidden;
   transition: opacity 0.7s ease, max-height 0.3s ease;
+}
+header .search-container.hidden {
+  overflow: hidden;
 }
 header .search-container.visible {
   opacity: 1;
   max-height: 100px;
 }
 
+@media only screen and (max-width: 992px) {
+  .articles.filter > div {
+    margin-bottom: 5px;
+  }
+}
 /**
 
     Footer Styles

@@ -56,13 +56,6 @@ export default function TopItemArticles({
                             </small>
                         </h3>
                     </Col>
-                    {filtering && (
-                        <Col sm={12} md={12} lg={4} className="text-right">
-                            <button className="btn btn-outline-primary">
-                                Date ()
-                            </button>
-                        </Col>
-                    )}
                 </Row>
             )}
 
