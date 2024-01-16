@@ -4,15 +4,11 @@ import TopHeading from "./Articles/TopHeading";
 import TopNews from "./Articles/TopNews";
 
 const Home = () => {
-    const [topNews, setTopNews] = useState([]);
-
-    useEffect(() => {}, []);
-
     return (
         <Container>
             <TopHeading />
             <hr />
-            <TopNews articles={topNews} />
+            <TopNews />
         </Container>
     );
 };

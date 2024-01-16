@@ -46,7 +46,7 @@ export const Heading = ({
                         />
                     </div>
                     <Card.Body className="position-absolute bottom-0 start-0 end-0">
-                        <Card.Title className="text-white py-3">
+                        <Card.Title className="text-white py-3 h6">
                             {article.title.length > 100
                                 ? article.title.substring(0, 100) + "..."
                                 : article.title}

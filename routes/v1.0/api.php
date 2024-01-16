@@ -14,6 +14,9 @@ use modules\Article\Http\Controllers\Api\ArticleController;
 // Top Headings API
 Route::get("/top-headings", [HomeController::class, "topHeadings"]);
 
+// Top Headings API
+Route::get("/top-news", [HomeController::class, "topNews"]);
+
 // Today's news
 Route::get("/today", [ArticleController::class, "todayArticles"]);
 
