@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import ScrollToTop from "../Helpers/Utilities/ScrollToTop";
 import Home from "../Pages/Home";
 import NotFound from "../Pages/NotFound";
 import Register from "../Pages/Authentication/Register";
@@ -10,12 +11,14 @@ import AuthorArticles from "../Pages/AuthorArticles";
 import SourceArticles from "../Pages/SourceArticles";
 import Search from "../Pages/Search";
 import { ArticleDetails } from "../Pages/ArticleDetails";
+import TodayArticles from "../Pages/TodayArticles";
 
-function Router(props) {
+function Router({ user }) {
     return (
         <div className="content">
+            <ScrollToTop />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home user={user} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
@@ -25,12 +28,20 @@ function Router(props) {
                     element={<CategoryArticles />}
                 />
                 <Route
-                    path="/authors/:slug/articles"
+                    path="/authors/:sourceSlug/:slug/articles"
                     element={<AuthorArticles />}
                 />
-                <Route path="/sources/:slug/articles" element={<SourceArticles />}/>
+                <Route
+                    path="/sources/:slug/articles"
+                    element={<SourceArticles />}
+                />
 
-                <Route path="/articles/:slug" element={<ArticleDetails />} />
+                <Route path="/today" element={<TodayArticles />} />
+
+                <Route
+                    path="/articles/:sourceSlug/:slug"
+                    element={<ArticleDetails />}
+                />
 
                 <Route path="/search" element={<Search />} />
 

@@ -16,8 +16,7 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         setLoading(true);
-        AxiosConfig
-            .post("/auth/login", { email: email, password: password })
+        AxiosConfig.post("/auth/login", { email: email, password: password })
             .then((response) => {
                 clearForm();
                 setLoading(false);
@@ -26,6 +25,7 @@ const Login = () => {
                 // Show success alert
                 ToastAlert(response.data.message, "success");
                 // Redirect to home page
+                document.location.href = "/";
             })
             .catch((error) => {
                 setLoading(false);
@@ -48,19 +48,19 @@ const Login = () => {
     };
 
     return (
-        <div className="login-page">
+        <div className="login-page mt-3">
             <ToastContainer />
             <Row>
-                <Col md={6}>
+                <Col md={12} lg={6}>
                     <img
                         src={loginImage}
-                        className="w-100 login-image"
+                        className="w-100 login-image d-none d-sm-none d-lg-block"
                         alt="login"
                     />
                 </Col>
-                <Col md={6}>
+                <Col sm={12} md={12} lg={6}>
                     <Form
-                        className="w-75 m-auto"
+                        className="m-auto"
                         method="POST"
                         onSubmit={handleLogin}
                     >

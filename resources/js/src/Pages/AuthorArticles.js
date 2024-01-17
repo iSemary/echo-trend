@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import AxiosConfig from "../config/AxiosConfig";
+import ResourcesViewer from "./PagesTemplate/ResourcesViewer";
 
 const AuthorArticles = () => {
-    const { slug } = useParams();
-
-    useEffect(() => {
-        AxiosConfig.get(`/authors/${slug}/articles`)
-            .then((response) => {})
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [slug]);
-
-    return slug;
+    const { sourceSlug, slug } = useParams();
+    return (
+        <ResourcesViewer
+            endPoint={`/authors/${sourceSlug}/${slug}/articles`}
+            slug={slug}
+            type="Author"
+            objectKeyName="author"
+            objectKeyValue="name"
+        />
+    );
 };
 
 export default AuthorArticles;

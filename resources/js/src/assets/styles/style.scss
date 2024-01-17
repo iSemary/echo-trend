@@ -9,11 +9,27 @@ body {
     color: $accentColor;
 }
 
+.highlight-link {
+    color: $whiteColor;
+    text-decoration-color: $primaryColor;
+}
+.f-12 {
+    font-size: 12px;
+}
+.bg-dark-secondary {
+    background-color: $secondaryColor;
+}
+.text-muted {
+    color: #dddddd !important;
+}
+.border-left-primary {
+    border-left: 2px solid $primaryColor;
+    padding-left: 5px;
+}
 .spin-icon {
     font-size: 20px;
     animation: spin 350ms linear infinite;
 }
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -87,6 +103,12 @@ body {
     background-color: transparent;
 }
 
+// Fix intl phone number selector conflicts
+.intl-tel-input .country-list {
+    background-color: $darkGrayColor;
+    z-index: 3;
+}
+
 header {
     background-color: $secondaryColor;
     .navbar {
@@ -123,13 +145,20 @@ header {
     .search-container {
         opacity: 0;
         max-height: 0;
-        overflow: hidden;
         transition: opacity 0.7s ease, max-height 0.3s ease;
     }
-
+    .search-container.hidden {
+        overflow: hidden;
+    }
     .search-container.visible {
         opacity: 1;
         max-height: 100px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .articles.filter > div {
+        margin-bottom: 5px;
     }
 }
 
@@ -175,44 +204,35 @@ footer {
 **/
 
 .news-scroll {
+    // display: inline-flex;
     height: 50px;
     overflow: hidden;
     position: relative;
-    h3 {
-        font-size: 1em;
-        color: $primaryColor;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        line-height: 50px;
-        text-align: center;
-        -moz-transform: translateX(100%);
-        -webkit-transform: translateX(100%);
-        transform: translateX(100%);
-        -moz-animation: topNewsScroll 15s linear infinite;
-        -webkit-animation: topNewsScroll 15s linear infinite;
-        animation: topNewsScroll 15s linear infinite;
-
-        &:nth-of-type(2) {
-            color: $whiteColor;
-        }
-    }
 }
+
+.news-scroll h3 {
+    font-size: 1em;
+    color: $primaryColor;
+    margin: 0;
+    line-height: 50px;
+    text-align: center;
+    white-space: nowrap;
+    animation: topNewsScroll 45s linear infinite;
+}
+
 @keyframes topNewsScroll {
     0% {
-        -moz-transform: translateX(100%);
-        -webkit-transform: translateX(100%);
         transform: translateX(100%);
     }
     100% {
-        -moz-transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
     }
 }
 
-.top-heading {
+.top-heading,
+.related-articles,
+.top-articles,
+.top-news {
     .heading-item {
         .card-img-top {
             filter: contrast(0.7);
@@ -222,6 +242,7 @@ footer {
             color: #fff;
             border-left: 2px solid $primaryColor;
             padding-left: 6px;
+            text-align: left;
         }
 
         .category-tag {
@@ -233,5 +254,28 @@ footer {
             padding: 5px;
             z-index: 1;
         }
+
+        .heading-image {
+            background-color: $secondaryColor;
+            overflow: hidden;
+        }
+    }
+    @media only screen and (min-width: 992px) {
+        .small-heading {
+            .heading-image {
+                .card-img-top {
+                    height: 200px;
+                }
+            }
+        }
+    }
+}
+/**
+    Article Page
+**/
+.article-page {
+    .article-author {
+        border-left: 2px solid $primaryColor;
+        padding-left: 5px;
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Support\Facades\Route;
+use modules\Article\Http\Controllers\Api\ArticleController;
 
 /**
  * Please note that file doesn't contain all the APIs on the application
@@ -10,5 +11,25 @@ use Illuminate\Support\Facades\Route;
  * modules/Category/routes/api.php
  */
 
-// Home API
-Route::get("/", [HomeController::class, "index"]);
+// Top Headings
+Route::get("top-headings", [HomeController::class, "topHeadings"]);
+
+// Top News
+Route::get("top-news", [HomeController::class, "topNews"]);
+
+// Random Category Articles
+Route::get("random/category/articles", [HomeController::class, "randomCategoryArticles"]);
+
+// User preferred news
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get("preferred/articles", [HomeController::class, "preferredArticles"]);
+});
+
+// Today's news
+Route::get("today", [ArticleController::class, "todayArticles"]);
+
+// Search
+Route::get("search", [ArticleController::class, "find"]);
+
+// Deeply Search
+Route::get("search/deeply", [ArticleController::class, "findDeeply"]);

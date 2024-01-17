@@ -13,6 +13,12 @@ return new class extends Migration {
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
+            $table->string('description', 5000)->nullable();
+            $table->string('url', 255);
+            $table->integer('category_id');
+            $table->integer('country_id');
+            $table->integer('language_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

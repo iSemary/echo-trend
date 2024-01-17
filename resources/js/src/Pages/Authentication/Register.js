@@ -58,6 +58,9 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
 
+        const formData = formValues;
+        formData.phone = formValues.dial_code + formData.phone;
+
         AxiosConfig.post("/auth/register", formValues)
             .then((response) => {
                 clearForm();
@@ -67,6 +70,7 @@ const Register = () => {
                 // Show success alert
                 ToastAlert(response.data.message, "success");
                 // Redirect to home page
+                document.location.href = "/";
             })
             .catch((error) => {
                 setLoading(false);
@@ -94,10 +98,10 @@ const Register = () => {
     }, []);
 
     return (
-        <div className="register-page">
+        <div className="register-page mt-3">
             <ToastContainer />
             <Row>
-                <Col md={6} className="d-grid align-items-center">
+                <Col md={12} lg={6}>
                     <h5>
                         <img
                             src={newsIcon}
@@ -116,13 +120,13 @@ const Register = () => {
                     </p>
                     <img
                         src={registerImage}
-                        className="w-100 login-image"
+                        className="w-100 login-image d-none d-sm-none d-lg-block"
                         alt="register"
                     />
                 </Col>
-                <Col md={6}>
+                <Col sm={12} md={12} lg={6}>
                     <Form
-                        className="w-75 m-auto"
+                        className="m-auto"
                         method="POST"
                         onSubmit={handleRegister}
                     >

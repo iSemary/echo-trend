@@ -12,7 +12,9 @@ return new class extends Migration {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('api_key', 255);
+            $table->string('class_name', 255);
+            $table->string('end_point', 255);
+            $table->string('api_key', 1024);
             $table->timestamp('fetched_at')->nullable();
             $table->timestamps();
         });

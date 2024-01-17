@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import AxiosConfig from "../config/AxiosConfig";
+import ResourcesViewer from "./PagesTemplate/ResourcesViewer";
 
 const CategoryArticles = () => {
     const { slug } = useParams();
-
-    useEffect(() => {
-        AxiosConfig.get(`/categories/${slug}/articles`)
-            .then((response) => {})
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [slug]);
-
-    return slug;
+    return (
+        <ResourcesViewer
+            endPoint={`/categories/${slug}/articles`}
+            slug={slug}
+            type="Category"
+            objectKeyName="category"
+            objectKeyValue="title"
+        />
+    );
 };
 
 export default CategoryArticles;
