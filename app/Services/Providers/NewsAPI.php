@@ -138,18 +138,41 @@ class NewsAPI extends ProviderAbstractor {
         }
     }
 
+    /**
+     * The function sets the API key by decrypting the provided encrypted key.
+     * 
+     * @param string apiKey The `apiKey` parameter is a string that represents the API key that needs to be
+     * set.
+     */
     protected function setApiKey(string $apiKey): void {
         $this->apiKey = Crypt::decrypt($apiKey);
     }
 
+    /**
+     * The function "getApiKey" returns the value of the apiKey property as a string.
+     * 
+     * @return string a string value, which is the API key.
+     */
     protected function getApiKey(): string {
         return $this->apiKey;
     }
 
+    /**
+     * The function sets the endpoint for a PHP class.
+     * 
+     * @param string endPoint The `endPoint` parameter is a string that represents the endpoint of a
+     * network connection.
+     */
     protected function setEndPoint(string $endPoint): void {
         $this->endPoint = $endPoint;
     }
 
+    /**
+     * The function "getEndPoint" returns the endpoint value as a string.
+     * 
+     * @return string The method is returning a string value, which is the value of the variable
+     * `->endPoint`.
+     */
     protected function getEndPoint(): string {
         return $this->endPoint;
     }
