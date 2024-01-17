@@ -14,6 +14,9 @@ export default function SearchResultViewer({ endPoint, keyword }) {
     const [category, setCategory] = useState("");
     const [source, setSource] = useState("");
 
+    // Callback function to load data from a specified API endpoint with pagination and date ordering.
+    // Manages loading states based on the current page and initiates Axios request to fetch articles.
+    // Updates state with the fetched articles and their metadata, and handles errors.
     const loadData = useCallback(() => {
         if (page > 1) {
             setLoadingMore(true);
@@ -38,8 +41,9 @@ export default function SearchResultViewer({ endPoint, keyword }) {
                 setLoadingMore(false);
                 console.error(error);
             });
-        }, [page, dateOrder, endPoint]);
-
+    }, [page, dateOrder, endPoint]);
+    
+    // Function to reset the page number and clear the articles state, effectively resetting the list of displayed articles.
     const resetArticles = () => {
         setPage(1);
         setArticles([]);

@@ -11,7 +11,7 @@ abstract class ProviderAbstractor {
     abstract protected function fetchSources(): void;
     abstract protected function createOrUpdateSources(array $fetchedSources): void;
     abstract protected function fetchArticles(): void;
-    abstract protected function createOrUpdateArticles(array $fetchedArticles): void;
+    abstract protected function createOrUpdateArticles(array $fetchedArticles, bool $heading): void;
+    abstract protected function fetchTopHeadingsSources(): void;
     abstract protected function fetchTopHeadings(): void;
-    abstract protected function createOrUpdateTopHeadings(array $topHeadingArticles): void;
 }

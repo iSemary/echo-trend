@@ -18,6 +18,9 @@ export default function ResourcesViewer({
     const [articles, setArticles] = useState([]);
     const [articlesMeta, setArticlesMeta] = useState([]);
 
+    // Function to load data from a specified API endpoint based on the current page number.
+    // If loading additional pages, sets loading indicator accordingly.
+    // Updates state with the fetched articles and their metadata, and handles errors.
     const loadData = useCallback(() => {
         if (page > 1) setLoadingMore(true);
         AxiosConfig.get(`${endPoint}?page=${page}`)
@@ -37,9 +40,20 @@ export default function ResourcesViewer({
             });
     }, [page, endPoint]);
 
+    // Function to reset the page number and clear the articles state, effectively resetting the list of displayed articles.
+    const resetArticles = () => {
+        setPage(1);
+        setArticles([]);
+    };
+
     useEffect(() => {
         loadData();
     }, [loadData]);
+
+    useEffect(() => {
+        resetArticles();
+        loadData();
+    }, [slug, loadData]);
 
     return (
         <>
