@@ -137,8 +137,28 @@ header {
   header .search-container.visible {
     opacity: 1;
     max-height: 100px; }
+    header .search-container.visible .row .selector {
+      z-index: 3; }
 
 @media only screen and (max-width: 992px) {
+  header .navbar .nav-link {
+    text-align: left; }
+  header .navbar .nav-link.search {
+    order: 3; }
+    header .navbar .nav-link.search svg {
+      margin-bottom: 5px; }
+  header .navbar .nav-registration a,
+  header .navbar .nav-registration button {
+    border-right: 0; }
+  header .articles.filter > div {
+    margin-bottom: 5px; }
+  header .search-container.visible {
+    max-height: 220px; }
+    header .search-container.visible .row > div {
+      padding-right: 0;
+      padding-left: 0;
+      margin-bottom: 5px; }
+
   .articles.filter > div {
     margin-bottom: 5px; } }
 /**

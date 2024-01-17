@@ -168,10 +168,42 @@ header {
     .search-container.visible {
         opacity: 1;
         max-height: 100px;
+        .row .selector {
+            z-index: 3;
+        }
     }
 }
-
+// Responsive styles
 @media only screen and (max-width: 992px) {
+    header {
+        .navbar {
+            .nav-link {
+                text-align: left;
+            }
+            .nav-link.search {
+                order: 3;
+                svg {
+                    margin-bottom: 5px;
+                }
+            }
+            .nav-registration a,
+            .nav-registration button {
+                border-right: 0;
+            }
+        }
+        .articles.filter > div {
+            margin-bottom: 5px;
+        }
+        .search-container.visible {
+            max-height: 220px;
+            .row > div {
+                padding-right: 0;
+                padding-left: 0;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
     .articles.filter > div {
         margin-bottom: 5px;
     }

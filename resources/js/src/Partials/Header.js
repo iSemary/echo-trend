@@ -27,7 +27,7 @@ const Header = ({ user, loadingUser, categories, sources }) => {
 
     return (
         <header>
-            <Navbar className="container" variant="dark">
+            <Navbar expand="lg" className="container" variant="dark">
                 <Link to="/" className="navbar-brand" aria-label="home">
                     <img
                         src={logo}
@@ -44,40 +44,50 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                         })}
                     </span>
                 </Link>
-                <Nav className="ml-auto nav-categories">
-                    <Link to="/today" className="nav-link" aria-label="login">
-                        <FaFire className="mb-1" /> Today
-                    </Link>
-                    {categories &&
-                        categories.length > 0 &&
-                        categories.slice(0, 4).map((category, index) => (
-                            <Link
-                                key={index}
-                                to={`/categories/${category.slug}/articles`}
-                                className="nav-link"
-                                aria-label="login"
-                            >
-                                {category.title}
-                            </Link>
-                        ))}
-                </Nav>
-                <Nav className="ml-auto nav-registration">
-                    <button
-                        className="nav-link"
-                        aria-label="search"
-                        type="button"
-                        onClick={(e) => setShowSearchBar(!showSearchBar)}
-                    >
-                        <FaSearch />
-                    </button>
-                    {session === 1 ? (
-                        <CgSpinnerTwoAlt className="spin-icon my-3" />
-                    ) : session === 2 ? (
-                        <LoggedIn user={user} setSession={setSession} />
-                    ) : (
-                        <LoggedOut />
-                    )}
-                </Nav>
+                <Navbar.Toggle aria-controls="expandedNavLinks" />
+                <Navbar.Collapse id="expandedNavLinks">
+                    <Nav className="ml-auto nav-categories">
+                        <Link
+                            to="/today"
+                            className="nav-link"
+                            aria-label="today's articles"
+                        >
+                            <FaFire className="mb-1" /> Today
+                        </Link>
+                        {categories &&
+                            categories.length > 0 &&
+                            categories.slice(0, 4).map((category, index) => (
+                                <Link
+                                    key={index}
+                                    to={`/categories/${category.slug}/articles`}
+                                    className="nav-link"
+                                    aria-label={category.title + " articles"}
+                                >
+                                    {category.title}
+                                </Link>
+                            ))}
+                    </Nav>
+                    <Nav className="ml-auto nav-registration">
+                        <button
+                            className="nav-link search"
+                            aria-label="search"
+                            type="button"
+                            onClick={(e) => setShowSearchBar(!showSearchBar)}
+                        >
+                            <FaSearch className="mb-1" size={18} />{" "}
+                            <span class="d-inline d-md-block d-lg-none pb-2">
+                                Search
+                            </span>
+                        </button>
+                        {session === 1 ? (
+                            <CgSpinnerTwoAlt className="spin-icon my-3" />
+                        ) : session === 2 ? (
+                            <LoggedIn user={user} setSession={setSession} />
+                        ) : (
+                            <LoggedOut />
+                        )}
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
 
             <SearchContainer
@@ -85,6 +95,7 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                 sources={sources}
                 show={showSearchBar}
             />
+            <hr className="d-block d-md-block d-lg-none" />
         </header>
     );
 };
