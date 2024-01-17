@@ -23,6 +23,8 @@ class ScrapNews {
                         $providerService->fetch();
                     }
                 }
+                // Set the provider last fetched at
+                $provider->update(['fetched_at' => now()]);
             }
         }
     }

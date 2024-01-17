@@ -20,10 +20,23 @@ class NewsAPI extends ProviderAbstractor {
     private string $apiKey;
     private array $countries = ['de', 'us', 'nl'];
 
+    private const SOURCES_PATH = '/sources';
+    private const EVERYTHING_PATH = '/everything';
+    private const TOP_HEADLINES_SOURCES_PATH = '/top-headlines/sources';
+    private const TOP_HEADLINES_PATH = '/top-headlines';
+
+
     public function __construct(Provider $provider) {
         $this->provider = $provider;
         $this->setApiKey($provider->api_key);
         $this->setEndPoint($provider->end_point);
+    }
+
+    public function fetch() {
+        $this->fetchSources();
+        $this->fetchTopHeadingsSources();
+        $this->fetchArticles();
+        $this->fetchTopHeadingsArticles();
     }
 
     /**
@@ -65,16 +78,9 @@ class NewsAPI extends ProviderAbstractor {
         return $this->endPoint;
     }
 
-    public function fetch() {
-        $this->fetchSources();
-        $this->fetchTopHeadingsSources();
-        $this->fetchArticles();
-        $this->fetchTopHeadings();
-    }
-
     protected function fetchSources(): void {
         foreach ($this->countries as $country) {
-            $response = Http::timeout(30)->get($this->endPoint . '/sources', ['apiKey' => $this->apiKey, 'country' => $country]);
+            $response = Http::timeout(30)->get($this->endPoint . self::SOURCES_PATH, ['apiKey' => $this->apiKey, 'country' => $country]);
             if ($response->successful()) {
                 $data = $response->json();
                 $fetchedSources = $data['sources'];
@@ -87,23 +93,23 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function fetchArticles(): void {
-        $separatedSources = Source::select("slug")->inRandomOrder()->limit(3)->pluck('slug')->toArray();
-        $separatedSources = implode(', ', $separatedSources);
-
-        $response = Http::timeout(30)->get($this->endPoint . '/everything', ['apiKey' => $this->apiKey, 'sources' => $separatedSources]);
-        if ($response->successful()) {
-            $data = $response->json();
-            $fetchedArticles = $data['articles'];
-            $this->createOrUpdateArticles($fetchedArticles, false);
-        } else {
-            $errorCode = $response->status();
-            $errorMessage = $response->body();
+        $sources = Source::select("slug")->where("provider_id", $this->provider->id)->get();
+        foreach ($sources as $source) {
+            $response = Http::timeout(30)->get($this->endPoint . self::EVERYTHING_PATH, ['apiKey' => $this->apiKey, 'sources' => $source->slug]);
+            if ($response->successful()) {
+                $data = $response->json();
+                $fetchedArticles = $data['articles'];
+                $this->createOrUpdateArticles($fetchedArticles, false);
+            } else {
+                $errorCode = $response->status();
+                $errorMessage = $response->body();
+            }
         }
     }
 
 
     protected function fetchTopHeadingsSources(): void {
-        $response = Http::timeout(30)->get($this->endPoint . '/top-headlines/sources', ['apiKey' => $this->apiKey]);
+        $response = Http::timeout(30)->get($this->endPoint . self::TOP_HEADLINES_SOURCES_PATH, ['apiKey' => $this->apiKey]);
         if ($response->successful()) {
             $data = $response->json();
             $fetchedSources = $data['sources'];
@@ -115,9 +121,9 @@ class NewsAPI extends ProviderAbstractor {
     }
 
 
-    protected function fetchTopHeadings(): void {
+    protected function fetchTopHeadingsArticles(): void {
         foreach ($this->countries as $country) {
-            $response = Http::timeout(30)->get($this->endPoint . '/top-headlines', ['apiKey' => $this->apiKey, 'country' => $country]);
+            $response = Http::timeout(30)->get($this->endPoint . self::TOP_HEADLINES_PATH, ['apiKey' => $this->apiKey, 'country' => $country]);
             if ($response->successful()) {
                 $data = $response->json();
                 $fetchedArticles = $data['articles'];
@@ -132,49 +138,38 @@ class NewsAPI extends ProviderAbstractor {
     protected function createOrUpdateArticles(array $articles, bool $heading): void {
         if (isset($articles) && is_array($articles) && count($articles)) {
             foreach ($articles as $article) {
-                // Create or update existing source category
-                if (isset($article['source'])) {
-                    $source = Source::where('slug', $article['source']['id'])
-                        ->orWhere('title', $article['source']['name'])
-                        ->first();
-                    if (!$source) {
-                        // If the source doesn't exist, create a new one
-                        $source = Source::create([
-                            'title' => $article['source']['name'],
-                            'slug' => !empty($article['source']['id']) ? $article['source']['id'] : Str::slug($article['source']['name']),
-                            'url' => '/',
-                        ]);
-                    }
+                $source = Source::where("slug", $article['source']['id'])->where("provider_id", $this->provider->id)->first();
+                if ($source) {
+
+                    $defaultAuthorName = $source->title . " Author";
+                    $author = Author::updateOrCreate(
+                        [
+                            'name' => $article['author'] && !empty($article['author']) ? $article['author'] : $defaultAuthorName,
+                            'slug' => $article['author'] && !empty($article['author']) ? Str::slug($article['author']) : Str::slug($defaultAuthorName),
+                        ],
+                        [
+                            'source_id' => $source->id
+                        ]
+                    );
+
+                    Article::updateOrCreate([
+                        'slug' => Str::slug($article['title'])
+                    ], [
+                        'title' => $article['title'],
+                        'author_id' => $author->id,
+                        'source_id' => $source->id,
+                        'provider_id' => $this->provider->id,
+                        'category_id' => $source->category_id,
+                        'language_id' => $source->language_id,
+                        'country_id' => $source->country_id,
+                        'description' => $article['description'],
+                        'body' => $article['content'] ?? '-',
+                        'is_head' => $heading,
+                        'reference_url' => $article['url'],
+                        'image' => $article['urlToImage'],
+                        'published_at' => strtotime($article['publishedAt']),
+                    ]);
                 }
-
-                $defaultAuthorName = $source->title . " Author";
-                $author = Author::updateOrCreate(
-                    [
-                        'name' => $article['author'] && !empty($article['author']) ? $article['author'] : $defaultAuthorName,
-                        'slug' => $article['author'] && !empty($article['author']) ? Str::slug($article['author']) : Str::slug($defaultAuthorName),
-                    ],
-                    [
-                        'source_id' => $source->id
-                    ]
-                );
-
-                Article::updateOrCreate([
-                    'title' => $article['title'],
-                    'slug' => Str::slug($article['title'])
-                ], [
-                    'author_id' => $author->id,
-                    'source_id' => $source->id,
-                    'provider_id' => $this->provider->id,
-                    'category_id' => $source->category_id,
-                    'language_id' => $source->language_id,
-                    'country_id' => $source->country_id,
-                    'description' => $article['description'],
-                    'body' => $article['content'] ?? '-',
-                    'is_head' => $heading,
-                    'reference_url' => $article['url'],
-                    'image' => $article['urlToImage'],
-                    'published_at' => strtotime($article['publishedAt']),
-                ]);
             }
         }
     }
@@ -205,10 +200,11 @@ class NewsAPI extends ProviderAbstractor {
                 }
                 // Create source or update existing one
                 Source::updateOrCreate([
-                    'title' => $source['name'],
                     'slug' => Str::slug($source['name']),
                 ], [
+                    'title' => $source['name'],
                     'url' => $source['url'] ?? '/',
+                    'provider_id' => $this->provider->id,
                     'description' => $source['description'],
                     'category_id' => $category->id,
                     'country_id' => $country->id,

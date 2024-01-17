@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('description', 1024)->nullable();
             $table->string('reference_url', 1024)->nullable();
             $table->longText('body');
-            $table->string('image', 255)->nullable();
+            $table->string('image', 1024)->nullable();
             $table->boolean('is_head')->default(0);
             $table->integer('provider_id');
             $table->integer('source_id');
