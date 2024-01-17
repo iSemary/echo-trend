@@ -60,7 +60,7 @@ export const SearchContainer = ({ show, categories, sources }) => {
                     />
                 </Col>
                 {/* Select Categories */}
-                <Col lg={2} className="mx-0 pe-0">
+                <Col lg={2} className="mx-0 pe-0 selector">
                     <CustomSelector
                         options={categories}
                         placeholder="Category"
@@ -69,7 +69,7 @@ export const SearchContainer = ({ show, categories, sources }) => {
                     />
                 </Col>
                 {/* Select Sources */}
-                <Col lg={2} className="mx-0 pe-0">
+                <Col lg={2} className="mx-0 pe-0 selector">
                     <CustomSelector
                         options={sources}
                         placeholder="Source"
@@ -85,7 +85,7 @@ export const SearchContainer = ({ show, categories, sources }) => {
                         className="form-control"
                     />
                 </Col>
-                <Col lg={2} className="mx-0 pe-0">
+                <Col lg={1} className="mx-0 pe-0">
                     <Button type="submit">Search</Button>
                 </Col>
             </Row>

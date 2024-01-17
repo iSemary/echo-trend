@@ -29,7 +29,7 @@ export const Token = {
                     resolve(response.data.success);
                 })
                 .catch((error) => {
-                    console.log("Error in Token.check:", error);
+                    console.log("User not authenticated");
                     reject(false);
                 });
         });

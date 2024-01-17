@@ -6,7 +6,12 @@ use App\Interfaces\ProviderInterface;
 use modules\Provider\Entities\Provider;
 
 class ScrapNews {
-    public function run() {
+    /**
+     * The function iterates through a list of providers, checks if the provider's name is in a predefined
+     * list of providers, dynamically creates an instance of the provider's class, and calls the fetch
+     * method if it exists.
+     */
+    public function run(): void {
         $providers = Provider::get();
         foreach ($providers as $provider) {
             if (in_array($provider->name, ProviderInterface::PROVIDERS)) {

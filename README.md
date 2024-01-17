@@ -5,6 +5,8 @@
 -   [Get Started](#get-started)
     -   [Postman Collection](#postman-collection)
     -   [Installation](#installation)
+    -   [Register New Provider](#register-new-provider)
+    -   [Fetch News](#fetch-news)
 
 ## About
 
@@ -77,3 +79,37 @@ Full-stack web application built with PHP Laravel on the backend and React on th
 #### 11. Build Production
 
     npm run build
+
+## Register New Provider
+
+Please note that the api_key column in the database is encrypted.
+
+1- By Running the Database Seeder, Which I've added 3 service provider with it's fresh keys to easy to test it
+
+```
+php artisan db:seed --class=modules\\Provider\\Database\\Seeders\\ProviderSeeder
+```
+
+2- Through the POST API in the Postman Collection
+
+```
+{{API_URL}}/{{API_VERSION}}/providers/register
+```
+
+Please note while registering a new provider and building the new provider class, Extend the "App\Services\Abstractors\ProviderAbstractor" class to make sure that everything is well structured
+
+## Fetch News
+
+There's a 2 ways to fetch the articles, categories, authors, and sources from the service providers
+
+1- By Calling the GET API:
+
+```
+{{API_URL}}/{{API_VERSION}}/providers/sync
+```
+
+2- By Running the command:
+
+```
+php artisan app:sync-news
+```

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import loginImage from "../../assets/images/auth-image.jpg";
-import newsIcon from "../../assets/images/icons/news-report.png";
 import AxiosConfig from "../../config/AxiosConfig";
 import { CgSpinnerTwoAlt } from "react-icons/cg";
 import { ToastContainer, ToastAlert } from "../../Helpers/Alerts/ToastAlert";
@@ -65,13 +64,6 @@ const Login = () => {
                         onSubmit={handleLogin}
                     >
                         <h5>
-                            <img
-                                src={newsIcon}
-                                className="me-1"
-                                width={25}
-                                height={25}
-                                alt="news icon"
-                            />
                             Your Gateway to Timely Updates
                         </h5>
                         <p>

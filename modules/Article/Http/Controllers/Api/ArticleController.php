@@ -11,10 +11,29 @@ use modules\Article\Transformers\ArticleResource;
 use modules\User\Interfaces\UserViewsTypes;
 use modules\Article\Http\Requests\SearchRequest;
 use modules\Article\Transformers\ArticlesCollection;
-use modules\Article\Transformers\ArticlesResource;
 
 class ArticleController extends ApiController {
 
+    /**
+     * The function retrieves an article by its source and article slug, marks the user as viewed the
+     * article if authenticated, filters the article object, retrieves related articles based on the
+     * article's category and source, and returns the article and related articles in a JSON response.
+     * 
+     * @param string sourceSlug The `sourceSlug` parameter is a string that represents the slug of the
+     * source from which the article is being fetched. A slug is a URL-friendly version of a string,
+     * typically used in URLs to identify a specific resource. In this case, it is used to identify the
+     * source of the article.
+     * @param string articleSlug The `articleSlug` parameter is a string that represents the unique
+     * identifier or slug of an article. It is used to retrieve a specific article from the database.
+     * 
+     * @return JsonResponse a JsonResponse with the following data:
+     * - Status code: 200
+     * - Message: "Article fetched successfully"
+     * - Data: An array with two keys:
+     *   - 'article': An instance of the ArticleResource class representing the fetched article.
+     *   - 'related_articles': An instance of the ArticlesCollection class representing a collection of
+     * related articles.
+     */
     public function show(string $sourceSlug, string $articleSlug): JsonResponse {
         $user = $this->getAuthenticatedUser();
         // Get article by source slug
@@ -33,6 +52,16 @@ class ArticleController extends ApiController {
         return $this->return(200, "Article fetched successfully", ['article' => $article, 'related_articles' => $relatedArticles]);
     }
 
+    /**
+     * The function finds articles based on a search request, including keyword, category ID, source ID,
+     * and date order, and returns a JSON response with the fetched articles.
+     * 
+     * @param SearchRequest searchRequest An object of type SearchRequest, which contains the search
+     * parameters such as keyword, category_id, source_id, and date_order.
+     * 
+     * @return JsonResponse a JsonResponse with a status code of 200, a message of "Articles fetched
+     * successfully", and an array containing the 'articles' key with the value of the  variable.
+     */
     public function find(SearchRequest $searchRequest): JsonResponse {
         $searchRequest = $searchRequest->validated();
         $keyword = $searchRequest['keyword'];
@@ -54,6 +83,7 @@ class ArticleController extends ApiController {
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
 
+    // TODO use elasticsearch engine
     public function findDeeply(SearchRequest $searchRequest): JsonResponse {
         $searchRequest = $searchRequest->validated();
         $keyword = $searchRequest['keyword'];
@@ -66,6 +96,11 @@ class ArticleController extends ApiController {
         return $this->return(200, "Articles fetched successfully", ['articles' => $articles]);
     }
 
+    /**
+     * The function retrieves today's articles and returns them as a JSON response.
+     * 
+     * @return JsonResponse A JsonResponse is being returned.
+     */
     public function todayArticles(): JsonResponse {
         $today = Carbon::today();
         $articles = Article::withArticleRelations()->whereDate(

@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ArticleNotFound from "../Articles/ArticleNotFound";
 import ArticleDetailsLoader from "../../Helpers/Loaders/ArticleDetailsLoader";
 import AxiosConfig from "../../config/AxiosConfig";
 import TopItemArticles from "../Articles/Templates/TopItemArticles";
 
-export default function ResourcesViewer({ endPoint, slug, type, objectKeyName, objectKeyValue, objectName }) {
+export default function ResourcesViewer({
+    endPoint,
+    slug,
+    type,
+    objectKeyName,
+    objectKeyValue,
+    objectName,
+}) {
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [page, setPage] = useState(1);
     const [articles, setArticles] = useState([]);
     const [articlesMeta, setArticlesMeta] = useState([]);
 
-    const loadData = (nextPage) => {
+    const loadData = useCallback(() => {
         if (page > 1) setLoadingMore(true);
-        AxiosConfig.get(`${endPoint}?page=${nextPage}`)
+        AxiosConfig.get(`${endPoint}?page=${page}`)
             .then((response) => {
                 setArticles((prevArticles) => [
                     ...prevArticles,
@@ -28,11 +35,11 @@ export default function ResourcesViewer({ endPoint, slug, type, objectKeyName, o
                 setLoadingMore(false);
                 console.error(error);
             });
-    };
+    }, [page, endPoint]);
 
     useEffect(() => {
-        loadData(page);
-    }, [slug, page]);
+        loadData();
+    }, [loadData]);
 
     return (
         <>
@@ -40,7 +47,11 @@ export default function ResourcesViewer({ endPoint, slug, type, objectKeyName, o
                 <TopItemArticles
                     articles={articles}
                     itemType={type}
-                    itemName={objectKeyName ? articles[0][objectKeyName][objectKeyValue] : objectName}
+                    itemName={
+                        objectKeyName
+                            ? articles[0][objectKeyName][objectKeyValue]
+                            : objectName
+                    }
                     setPage={setPage}
                     page={page}
                     totalItems={articlesMeta.total}

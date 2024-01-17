@@ -1,14 +1,27 @@
 @import "./variables/variables.module.scss";
+@font-face {
+    font-family: "EncodeSansCondensed";
+    src: url("../fonts/encode-sans-condensed/EncodeSansCondensed-Regular.ttf");
+}
 
 body {
     color: $whiteColor;
     background-color: $secondaryColor;
+    font-family: "EncodeSansCondensed", Helvetica, Arial, sans-serif;
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h5 {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
 .text-accent {
     color: $accentColor;
 }
-
 .highlight-link {
     color: $whiteColor;
     text-decoration-color: $primaryColor;
@@ -110,6 +123,8 @@ body {
 }
 
 header {
+    font-weight: bold;
+    letter-spacing: 1px;
     background-color: $secondaryColor;
     .navbar {
         display: flex;
@@ -153,10 +168,42 @@ header {
     .search-container.visible {
         opacity: 1;
         max-height: 100px;
+        .row .selector {
+            z-index: 3;
+        }
     }
 }
-
+// Responsive styles
 @media only screen and (max-width: 992px) {
+    header {
+        .navbar {
+            .nav-link {
+                text-align: left;
+            }
+            .nav-link.search {
+                order: 3;
+                svg {
+                    margin-bottom: 5px;
+                }
+            }
+            .nav-registration a,
+            .nav-registration button {
+                border-right: 0;
+            }
+        }
+        .articles.filter > div {
+            margin-bottom: 5px;
+        }
+        .search-container.visible {
+            max-height: 220px;
+            .row > div {
+                padding-right: 0;
+                padding-left: 0;
+                margin-bottom: 5px;
+            }
+        }
+    }
+
     .articles.filter > div {
         margin-bottom: 5px;
     }
@@ -170,7 +217,8 @@ header {
 footer {
     background-color: $secondaryColor;
     color: $whiteColor;
-
+    font-weight: bold;
+    letter-spacing: 1px;
     .social-list {
         list-style: none;
         display: flex;
@@ -235,7 +283,7 @@ footer {
 .top-news {
     .heading-item {
         .card-img-top {
-            filter: contrast(0.7);
+            filter: contrast(0.5);
         }
 
         .publish-details {

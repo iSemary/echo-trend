@@ -23,26 +23,12 @@ function Router({ user }) {
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
 
-                <Route
-                    path="/categories/:slug/articles"
-                    element={<CategoryArticles />}
-                />
-                <Route
-                    path="/authors/:sourceSlug/:slug/articles"
-                    element={<AuthorArticles />}
-                />
-                <Route
-                    path="/sources/:slug/articles"
-                    element={<SourceArticles />}
-                />
+                <Route path="/categories/:slug/articles" element={<CategoryArticles />}/>
+                <Route path="/authors/:sourceSlug/:slug/articles" element={<AuthorArticles />}/>
+                <Route path="/sources/:slug/articles" element={<SourceArticles />}/>
+                <Route path="/articles/:sourceSlug/:slug" element={<ArticleDetails />}/>
 
                 <Route path="/today" element={<TodayArticles />} />
-
-                <Route
-                    path="/articles/:sourceSlug/:slug"
-                    element={<ArticleDetails />}
-                />
-
                 <Route path="/search" element={<Search />} />
 
                 <Route path="*" element={<NotFound />} />
