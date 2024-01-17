@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ArticleNotFound from "../Articles/ArticleNotFound";
+import React, { useCallback, useEffect, useState } from "react";
 import ArticleDetailsLoader from "../../Helpers/Loaders/ArticleDetailsLoader";
 import AxiosConfig from "../../config/AxiosConfig";
 import SearchResults from "../Articles/Templates/SearchResults";
@@ -15,7 +14,7 @@ export default function SearchResultViewer({ endPoint, keyword }) {
     const [category, setCategory] = useState("");
     const [source, setSource] = useState("");
 
-    const loadData = () => {
+    const loadData = useCallback(() => {
         if (page > 1) {
             setLoadingMore(true);
         }
@@ -39,7 +38,7 @@ export default function SearchResultViewer({ endPoint, keyword }) {
                 setLoadingMore(false);
                 console.error(error);
             });
-    };
+        }, [page, dateOrder, endPoint]);
 
     const resetArticles = () => {
         setPage(1);
@@ -48,11 +47,11 @@ export default function SearchResultViewer({ endPoint, keyword }) {
 
     useEffect(() => {
         loadData();
-    }, [keyword, page, dateOrder, category, source]);
+    }, [loadData]);
 
     return (
         <>
-            {!loading && articles.length > 0 ? (
+            {!loading ? (
                 <SearchResults
                     keyword={keyword}
                     articles={articles}
@@ -72,10 +71,8 @@ export default function SearchResultViewer({ endPoint, keyword }) {
                     setSource={setSource}
                     resetArticles={resetArticles}
                 />
-            ) : loading ? (
-                <ArticleDetailsLoader />
             ) : (
-                <ArticleNotFound />
+                <ArticleDetailsLoader />
             )}
         </>
     );

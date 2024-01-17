@@ -23,7 +23,7 @@ function App() {
                     setUser(response.data.data.user);
                 }
             } catch (error) {
-                console.error("Error in App useEffect:", error);
+                console.log("User not authenticated");
             } finally {
                 setLoadingUser(false);
             }

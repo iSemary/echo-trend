@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, FloatingLabel, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import registerImage from "../../assets/images/auth-image.jpg";
-import newsIcon from "../../assets/images/icons/news-report.png";
 import AxiosConfig from "../../config/AxiosConfig";
 import IntlTelInput from "react-intl-tel-input-18";
 import "react-intl-tel-input-18/dist/main.css";
@@ -103,13 +102,6 @@ const Register = () => {
             <Row>
                 <Col md={12} lg={6}>
                     <h5>
-                        <img
-                            src={newsIcon}
-                            className="me-1"
-                            width={25}
-                            height={25}
-                            alt="news icon"
-                        />
                         Your Gateway to Timely Updates
                     </h5>
                     <p>

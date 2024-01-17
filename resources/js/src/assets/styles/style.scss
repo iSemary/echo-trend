@@ -1,14 +1,27 @@
 @import "./variables/variables.module.scss";
+@font-face {
+    font-family: "EncodeSansCondensed";
+    src: url("../fonts/encode-sans-condensed/EncodeSansCondensed-Regular.ttf");
+}
 
 body {
     color: $whiteColor;
     background-color: $secondaryColor;
+    font-family: "EncodeSansCondensed", Helvetica, Arial, sans-serif;
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h5 {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
 .text-accent {
     color: $accentColor;
 }
-
 .highlight-link {
     color: $whiteColor;
     text-decoration-color: $primaryColor;
@@ -110,6 +123,8 @@ body {
 }
 
 header {
+    font-weight: bold;
+    letter-spacing: 1px;
     background-color: $secondaryColor;
     .navbar {
         display: flex;
@@ -170,7 +185,8 @@ header {
 footer {
     background-color: $secondaryColor;
     color: $whiteColor;
-
+    font-weight: bold;
+    letter-spacing: 1px;
     .social-list {
         list-style: none;
         display: flex;
@@ -235,7 +251,7 @@ footer {
 .top-news {
     .heading-item {
         .card-img-top {
-            filter: contrast(0.7);
+            filter: contrast(0.5);
         }
 
         .publish-details {
