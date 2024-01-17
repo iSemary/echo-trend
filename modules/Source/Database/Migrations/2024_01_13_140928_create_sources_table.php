@@ -15,9 +15,10 @@ return new class extends Migration {
             $table->string('slug', 255)->unique();
             $table->string('description', 5000)->nullable();
             $table->string('url', 255);
-            $table->integer('category_id');
-            $table->integer('country_id');
-            $table->integer('language_id');
+            $table->tinyInteger('provider_id');
+            $table->integer('category_id')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->integer('language_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

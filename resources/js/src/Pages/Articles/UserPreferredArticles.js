@@ -24,7 +24,7 @@ const UserPreferredArticles = () => {
             {sourceArticles && sourceArticles.length > 0 && (
                 <div className="mb-3">
                     <h4 className="mb-0 text-uppercase">
-                        What source you like wrote today
+                        What sources you like wrote today
                     </h4>
                     <TopItemArticles articles={sourceArticles} />
                 </div>

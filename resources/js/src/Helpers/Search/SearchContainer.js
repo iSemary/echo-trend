@@ -34,7 +34,9 @@ export const SearchContainer = ({ show, categories, sources }) => {
     const handleChangeDate = (e) => {
         setDate(e.target.value);
     };
-
+    // Function to handle the submission of a search form.
+    // Prevents the default form submission, constructs query parameters based on input values,
+    // and navigates to the search results page with the constructed query parameters.
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         const queryParams = `?keyword=${keyword}&category=${category}&source=${source}&date=${date}`;

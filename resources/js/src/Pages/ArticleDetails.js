@@ -5,6 +5,7 @@ import AxiosConfig from "../config/AxiosConfig";
 import ArticleDetailsLoader from "../Helpers/Loaders/ArticleDetailsLoader";
 import ArticleNotFound from "./Articles/ArticleNotFound";
 import { Heading } from "./Articles/Templates/Heading";
+import { Helmet } from "react-helmet";
 
 export const ArticleDetails = () => {
     const { sourceSlug, slug } = useParams();
@@ -37,6 +38,9 @@ export const ArticleDetails = () => {
 
     return (
         <div className="article-page mt-5">
+            <Helmet>
+                <meta name="description" content={article.title} />
+            </Helmet>
             <Row>
                 <Col md={12}>
                     <Row>

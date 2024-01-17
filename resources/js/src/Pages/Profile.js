@@ -17,7 +17,6 @@ const Profile = () => {
     const [userCategories, setUserCategories] = useState([]);
     const [userAuthors, setUserAuthors] = useState([]);
     const [userSources, setUserSources] = useState([]);
-
     // Categories options
     const [categories, setCategories] = useState([]);
     // Authors options

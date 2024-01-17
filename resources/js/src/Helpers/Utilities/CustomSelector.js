@@ -14,7 +14,8 @@ const CustomSelector = ({
 }) => {
     // Select2 animation on select
     const animatedComponents = makeAnimated();
-
+    // Initializes the default selected options based on provided default values.
+    // Filters options to include only those whose valueKey is present in the defaultSelectedValues array.
     const defaultSelectedOptions = defaultSelectedValues
         ? options.filter((option) =>
               defaultSelectedValues.includes(option[valueKey])

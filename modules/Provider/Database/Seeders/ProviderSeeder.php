@@ -11,7 +11,7 @@ class ProviderSeeder extends Seeder {
      * Run the database seeds.
      */
     public function run(): void {
-        Provider::updateOrCreate(
+        Provider::insert([
             [
                 'name' => 'NewsAPI',
                 'class_name' => '\App\Services\Providers\NewsAPI',
@@ -29,7 +29,7 @@ class ProviderSeeder extends Seeder {
                 'class_name' => '\App\Services\Providers\NewsAPIAi',
                 'end_point' => 'http://eventregistry.org/api/v1/',
                 'api_key' => Crypt::encrypt('934b9bbc-4908-4123-83ae-561eb197221e'),
-            ]
+            ]]
         );
     }
 }
