@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255);
-            $table->string('slug', 255)->unique();
+            $table->string('title', 1024);
+            $table->string('slug', 1024)->unique();
             $table->string('description', 1024)->nullable();
             $table->string('reference_url', 1024)->nullable();
             $table->longText('body');
