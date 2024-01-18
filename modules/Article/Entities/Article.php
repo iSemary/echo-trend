@@ -47,7 +47,7 @@ class Article extends Model {
     }
 
     public function provider() {
-        return $this->belongsTo(Provider::class, 'provider_id');
+        return $this->belongsTo(Provider::class);
     }
 
     /**
@@ -103,7 +103,26 @@ class Article extends Model {
      * @return Builder a Builder instance.
      */
     public function scopeWithArticleRelations(Builder $query): Builder {
-        return $query->with(['language', 'country', 'source', 'author', 'category', 'provider']);
+        return $query->select(['articles.id', 'articles.title', 'articles.slug', 'description', 'reference_url', 'body', 'image', 'is_head', 'provider_id', 'source_id', 'category_id', 'author_id', 'language_id', 'published_at'])->with([
+            'language' => function ($query) {
+                $query->select('id', 'name', 'code');
+            },
+            'country' => function ($query) {
+                $query->select('id', 'name', 'code');
+            },
+            'source' => function ($query) {
+                $query->select('id', 'title', 'slug');
+            },
+            'author' => function ($query) {
+                $query->select('id', 'name', 'slug');
+            },
+            'category' => function ($query) {
+                $query->select('id', 'title', 'slug');
+            },
+            'provider' => function ($query) {
+                $query->select('id', 'name');
+            },
+        ]);
     }
 
     /**

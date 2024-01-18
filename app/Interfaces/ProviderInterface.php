@@ -4,8 +4,8 @@ namespace App\Interfaces;
 
 interface ProviderInterface {
     const PROVIDERS = [
-        // "NewsAPI",
+        "NewsAPI",
         "NewsAPIAi",
-        // "NewsDataIO"
+        "NewsDataIO"
     ];
 }

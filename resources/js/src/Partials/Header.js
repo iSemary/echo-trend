@@ -94,6 +94,7 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                 categories={categories}
                 sources={sources}
                 show={showSearchBar}
+                setShowSearchBar={setShowSearchBar}
             />
             <hr className="d-block d-md-block d-lg-none" />
         </header>
