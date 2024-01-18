@@ -8,10 +8,12 @@ import { SearchContainer } from "../Helpers/Search/SearchContainer";
 import { FaSearch } from "react-icons/fa";
 import LoggedIn from "./Header/LoggedIn";
 import LoggedOut from "./Header/LoggedOut";
+import { useLocation } from "react-router-dom";
 
 const Header = ({ user, loadingUser, categories, sources }) => {
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [session, setSession] = useState(1);
+    const location = useLocation();
 
     useEffect(() => {
         if (loadingUser) {
@@ -24,6 +26,12 @@ const Header = ({ user, loadingUser, categories, sources }) => {
             }
         }
     }, [loadingUser, user]);
+
+    useEffect(() => {
+        return () => {
+            setShowSearchBar(false);
+        };
+    }, [location.pathname]);
 
     return (
         <header>
@@ -44,6 +52,7 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                         })}
                     </span>
                 </Link>
+
                 <Navbar.Toggle aria-controls="expandedNavLinks" />
                 <Navbar.Collapse id="expandedNavLinks">
                     <Nav className="ml-auto nav-categories">
@@ -75,7 +84,7 @@ const Header = ({ user, loadingUser, categories, sources }) => {
                             onClick={(e) => setShowSearchBar(!showSearchBar)}
                         >
                             <FaSearch className="mb-1" size={18} />{" "}
-                            <span class="d-inline d-md-block d-lg-none pb-2">
+                            <span className="d-inline d-md-block d-lg-none pb-2">
                                 Search
                             </span>
                         </button>

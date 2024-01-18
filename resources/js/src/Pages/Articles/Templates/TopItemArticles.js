@@ -21,7 +21,7 @@ export default function TopItemArticles({
     };
 
     return (
-        <div className="top-articles w-100">
+        <div className="top-articles mt-5 w-100">
             {itemName && (
                 <Row>
                     <Col sm={12} md={12} lg={8}>

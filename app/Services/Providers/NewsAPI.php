@@ -93,12 +93,13 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function fetchArticles(): void {
-        $sources = Source::select("slug")->where("provider_id", $this->provider->id)->get();
+        $sources = Source::where("provider_id", $this->provider->id)->get();
         foreach ($sources as $source) {
             $response = Http::timeout(30)->get($this->endPoint . self::EVERYTHING_PATH, ['apiKey' => $this->apiKey, 'sources' => $source->slug]);
             if ($response->successful()) {
                 $data = $response->json();
                 $fetchedArticles = $data['articles'];
+                $fetchedArticles = $data['source'] = $source;
                 $this->createOrUpdateArticles($fetchedArticles, false);
             } else {
                 $errorCode = $response->status();
@@ -136,10 +137,10 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function createOrUpdateArticles(array $articles, bool $heading): void {
+        $source = $articles['source'];
         if (isset($articles) && is_array($articles) && count($articles)) {
             foreach ($articles as $article) {
-                $source = Source::where("slug", $article['source']['id'])->where("provider_id", $this->provider->id)->first();
-                if ($source && isset($article['content'])) {
+                if (isset($article['content'])) {
                     $defaultAuthorName = $source->title . " Author";
                     $author = Author::updateOrCreate(
                         [

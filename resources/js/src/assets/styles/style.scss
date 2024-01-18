@@ -95,7 +95,10 @@ h6,
     &::placeholder {
         color: $lightGrayColor;
     }
-
+    &:disabled {
+        background-color: $darkGrayColor;
+        color: $lightGrayColor;
+    }
     // For chrome auto-complete changing color
     &:-webkit-autofill,
     &:-webkit-autofill:hover,

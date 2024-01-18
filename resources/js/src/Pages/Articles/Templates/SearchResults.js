@@ -58,7 +58,7 @@ export default function SearchResults({
     }, []);
 
     return (
-        <div className="top-articles w-100">
+        <div className="top-articles mt-5 w-100">
             <Row className="w-100">
                 <Col sm={12} md={12} lg={6}>
                     <h3 className="mb-2">
@@ -114,20 +114,26 @@ export default function SearchResults({
                 </Col>
             </Row>
             <Row className="mt-3">
-                {articles.map((articles, index) => (
-                    <Heading
-                        key={index}
-                        showCategory={false}
-                        article={articles}
-                        sm={12}
-                        md={6}
-                        lg={4}
-                        imageHeight={210}
-                        className="mb-4"
-                    />
-                ))}
+                {articles && articles.length ? (
+                    articles.map((articles, index) => (
+                        <Heading
+                            key={index}
+                            showCategory={false}
+                            article={articles}
+                            sm={12}
+                            md={6}
+                            lg={4}
+                            imageHeight={210}
+                            className="mb-4"
+                        />
+                    ))
+                ) : (
+                    <p className="text-center">
+                        There's no articles found for this keyword
+                    </p>
+                )}
             </Row>
-            {lastPage > currentPage && (
+            {lastPage > currentPage && articles && articles.length ? (
                 <div className="w-100 text-center">
                     <button
                         disabled={loadingMore}
@@ -141,7 +147,7 @@ export default function SearchResults({
                         Load More
                     </button>
                 </div>
-            )}
+            ) : ""}
         </div>
     );
 }

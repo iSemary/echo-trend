@@ -108,7 +108,7 @@ class NewsAPIAi extends ProviderAbstractor {
         if (isset($articles) && is_array($articles) && count($articles)) {
             $category = Category::updateOrCreate([
                 'title' => ucfirst($articles['category']),
-                'slug' => $articles['category']
+                'slug' => strtolower($articles['category'])
             ]);
             $country = Country::updateOrCreate([
                 'name' => strtoupper($articles['country']),

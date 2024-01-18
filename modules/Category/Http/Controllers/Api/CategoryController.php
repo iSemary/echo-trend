@@ -19,7 +19,11 @@ class CategoryController extends ApiController {
      * successfully", and an array of categories.
      */
     public function index(): JsonResponse {
-        $categories = Category::select(['id', 'title', 'slug'])->orderBy("order_number", "DESC")->get();
+        $categories = Category::select(['categories.id', 'categories.title', 'categories.slug'])
+            ->leftJoin('articles', 'categories.id', '=', 'articles.category_id')
+            ->groupBy('categories.id', 'categories.title', 'categories.slug')
+            ->orderByRaw('COUNT(articles.id) DESC')
+            ->get();
         return $this->return(200, "Categories fetched successfully", ['categories' => $categories]);
     }
 

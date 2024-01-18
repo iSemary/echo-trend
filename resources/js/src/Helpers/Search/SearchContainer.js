@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import CustomSelector from "../Utilities/CustomSelector";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const SearchContainer = ({ show, categories, sources, setShowSearchBar }) => {
+export const SearchContainer = ({ show, categories, sources }) => {
     const queryParameters = new URLSearchParams(window.location.search);
     const initialKeyword = queryParameters.get("keyword");
     const initialCategory = queryParameters.get("category");
@@ -18,13 +18,7 @@ export const SearchContainer = ({ show, categories, sources, setShowSearchBar })
     const [date, setDate] = useState(initialDate || currentDay);
 
     const navigate = useNavigate();
-    const location = useLocation();
 
-    useEffect(() => {
-        return () => {
-            setShowSearchBar(false);
-        };
-    }, [location.pathname]);
 
     const handleChangeKeyword = (e) => {
         setKeyword(e.target.value);

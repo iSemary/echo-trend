@@ -28,10 +28,14 @@ export default function SearchResultViewer({ endPoint, keyword }) {
 
         AxiosConfig.get(`${endPoint}&page=${page}&date_order=${dateOrder}`)
             .then((response) => {
-                setArticles((prevArticles) => [
-                    ...prevArticles,
-                    ...response.data.data.articles.data,
-                ]);
+                if (articles.length) {
+                    setArticles((prevArticles) => [
+                        ...prevArticles,
+                        ...response.data.data.articles.data,
+                    ]);
+                } else {
+                    setArticles(response.data.data.articles.data);
+                }
                 setArticlesMeta(response.data.data.articles.meta);
                 setLoading(false);
                 setLoadingMore(false);
@@ -42,7 +46,7 @@ export default function SearchResultViewer({ endPoint, keyword }) {
                 console.error(error);
             });
     }, [page, dateOrder, endPoint]);
-    
+
     // Function to reset the page number and clear the articles state, effectively resetting the list of displayed articles.
     const resetArticles = () => {
         setPage(1);
@@ -52,6 +56,12 @@ export default function SearchResultViewer({ endPoint, keyword }) {
     useEffect(() => {
         loadData();
     }, [loadData]);
+
+    useEffect(() => {
+        resetArticles();
+        loadData();
+        console.log(endPoint)
+    }, [endPoint]);
 
     return (
         <>

@@ -103,7 +103,7 @@ class Article extends Model {
      * @return Builder a Builder instance.
      */
     public function scopeWithArticleRelations(Builder $query): Builder {
-        return $query->select(['articles.id', 'articles.title', 'articles.slug', 'articles.description', 'reference_url', 'body', 'image', 'is_head', 'articles.provider_id', 'source_id', 'articles.category_id', 'author_id', 'articles.language_id', 'published_at'])->with([
+        return $query->select(['articles.id', 'articles.title', 'articles.slug', 'articles.description', 'reference_url', 'body', 'image', 'is_head', 'articles.provider_id', 'articles.source_id', 'articles.category_id', 'author_id', 'articles.language_id', 'published_at'])->with([
             'language' => function ($query) {
                 $query->select('id', 'name', 'code');
             },
