@@ -98,7 +98,8 @@ class NewsAPI extends ProviderAbstractor {
             $response = Http::timeout(30)->get($this->endPoint . self::EVERYTHING_PATH, ['apiKey' => $this->apiKey, 'sources' => $source->slug]);
             if ($response->successful()) {
                 $data = $response->json();
-                $fetchedArticles = $data['articles'];
+                $fetchedArticles = [];
+                $fetchedArticles['articles'] = $data['articles'];
                 $fetchedArticles['source'] = $source;
                 $this->createOrUpdateArticles($fetchedArticles, false);
             } else {
@@ -127,7 +128,8 @@ class NewsAPI extends ProviderAbstractor {
             $response = Http::timeout(30)->get($this->endPoint . self::TOP_HEADLINES_PATH, ['apiKey' => $this->apiKey, 'country' => $country]);
             if ($response->successful()) {
                 $data = $response->json();
-                $fetchedArticles = $data['articles'];
+                $fetchedArticles = [];
+                $fetchedArticles['articles'] = $data['articles'];
                 $this->createOrUpdateArticles($fetchedArticles, true);
             } else {
                 $errorCode = $response->status();
@@ -138,8 +140,8 @@ class NewsAPI extends ProviderAbstractor {
 
     protected function createOrUpdateArticles(array $articles, bool $heading): void {
 
-        if (isset($articles) && is_array($articles) && count($articles)) {
-            foreach ($articles as $article) {
+        if (isset($articles['articles']) && is_array($articles['articles']) && count($articles['articles'])) {
+            foreach ($articles['articles'] as $article) {
                 $source = isset($articles['source']) ? $articles['source'] : Source::where("slug", $article['source']['id'])->where("provider_id", $this->provider->id)->first();
                 if (isset($article['content'])) {
                     $defaultAuthorName = $source->title . " Author";
