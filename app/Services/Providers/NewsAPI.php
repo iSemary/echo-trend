@@ -137,9 +137,10 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function createOrUpdateArticles(array $articles, bool $heading): void {
-        $source = $articles['source'];
+        
         if (isset($articles) && is_array($articles) && count($articles)) {
             foreach ($articles as $article) {
+                $source = isset($articles['source']) ? $articles['source'] : Source::where("slug", $article['source']['id'])->where("provider_id", $this->provider->id)->first();
                 if (isset($article['content'])) {
                     $defaultAuthorName = $source->title . " Author";
                     $author = Author::updateOrCreate(
