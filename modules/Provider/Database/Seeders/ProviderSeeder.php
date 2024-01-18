@@ -16,13 +16,13 @@ class ProviderSeeder extends Seeder {
                 'name' => 'NewsAPI',
                 'class_name' => '\App\Services\Providers\NewsAPI',
                 'end_point' => 'https://newsapi.org/v2/',
-                'api_key' => Crypt::encrypt('d607acc451434c33baca2a38052085dd'),
+                'api_key' => Crypt::encrypt('da3c845f1d2948bd9940e70980be5e0d'),
             ],
             [
                 'name' => 'NewsDataIO',
                 'class_name' => '\App\Services\Providers\NewsDataIO',
                 'end_point' => 'https://newsdata.io/api/1/',
-                'api_key' => Crypt::encrypt('pub_36573cad0b36ac8ea5697807f39d82ca96f51'),
+                'api_key' => Crypt::encrypt('pub_366969aa8f3cdff5cd6dc1a34f0198abce036'),
             ],
             [
                 'name' => 'NewsAPIAi',

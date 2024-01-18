@@ -5,6 +5,7 @@
 -   [Get Started](#get-started)
     -   [Postman Collection](#postman-collection)
     -   [Installation](#installation)
+    -   [Docker](#docker)
     -   [Register New Provider](#register-new-provider)
     -   [Fetch News](#fetch-news)
 
@@ -80,9 +81,23 @@ Full-stack web application built with PHP Laravel on the backend and React on th
 
     npm run build
 
+
+## Docker
+
+```
+docker-compose up
+```
+OR
+```
+./vendor/bin/sail up
+
+```
+
 ## Register New Provider
 
-Please note that the api_key column in the database is encrypted.
+### 🔑 Please note that i've added a fresh keys to be able to test the 3 service providers.
+
+### 🔒 The api_key column in the database is encrypted.
 
 1- By Running the Database Seeder, Which I've added 3 service provider with it's fresh keys to easy to test it
 
@@ -100,7 +115,7 @@ Please note while registering a new provider and building the new provider class
 
 ## Fetch News
 
-There's a 2 ways to fetch the articles, categories, authors, and sources from the service providers
+There's a 2 ways to fetch the articles, categories, authors, and sources from the service providers.
 
 1- By Calling the GET API:
 
