@@ -130,6 +130,8 @@ class NewsAPI extends ProviderAbstractor {
                 $data = $response->json();
                 $fetchedArticles = [];
                 $fetchedArticles['articles'] = $data['articles'];
+                var_dump($fetchedArticles);
+                die();
                 $this->createOrUpdateArticles($fetchedArticles, true);
             } else {
                 $errorCode = $response->status();
@@ -155,6 +157,8 @@ class NewsAPI extends ProviderAbstractor {
                         ]
                     );
 
+                    $description = $article['description'] ?? "";
+
                     Article::updateOrCreate([
                         'slug' => Str::slug(substr($article['title'], 0, 100))
                     ], [
@@ -165,7 +169,7 @@ class NewsAPI extends ProviderAbstractor {
                         'category_id' => $source->category_id,
                         'language_id' => $source->language_id,
                         'country_id' => $source->country_id,
-                        'description' => $article['description'] ?? "",
+                        'description' => substr($description, 0, 1000),
                         'body' => $article['content'] ?? '-',
                         'is_head' => $heading,
                         'reference_url' => $article['url'],

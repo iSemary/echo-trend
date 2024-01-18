@@ -119,6 +119,9 @@ class NewsDataIO extends ProviderAbstractor {
                         ]
                     );
 
+                    $description = $article['description'] ?? "";
+                    $description = substr($description, 0, 1000);
+                    
                     Article::updateOrCreate([
                         'slug' => Str::slug(substr($article['title'], 0, 100))
                     ], [
@@ -129,7 +132,7 @@ class NewsDataIO extends ProviderAbstractor {
                         'category_id' => $source->category_id,
                         'language_id' => $source->language_id,
                         'country_id' => $source->country_id,
-                        'description' => mb_convert_encoding($article['description'], "UTF-8"),
+                        'description' => mb_convert_encoding($description, "UTF-8"),
                         'body' => mb_convert_encoding($article['content'] ?? '-', "UTF-8"),
                         'is_head' => in_array($article['category'], ['top']),
                         'reference_url' => $article['link'],

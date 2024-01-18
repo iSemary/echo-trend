@@ -12,5 +12,7 @@ class Category extends Model {
 
     protected $fillable = ['title', 'slug', 'parent_id', 'order_number', 'status'];
 
- 
+    public function articles() {
+        return $this->hasMany(Article::class);
+    }
 }
