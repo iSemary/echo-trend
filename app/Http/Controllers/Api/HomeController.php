@@ -124,11 +124,14 @@ class HomeController extends ApiController {
         $user = $this->getAuthenticatedUser();
         $categoryIds = $user ? UserInterest::getItemIds($user->id, UserInterestTypes::CATEGORY) : [];
 
-        return Category::with('articles')->when($categoryIds, function ($query) use ($categoryIds) {
-            return $query->whereIn('id', $categoryIds);
-        })
-            ->select(['id', 'title', 'slug'])
+        return Category::leftJoin('articles', 'categories.id', '=', 'articles.category_id')
+            ->when($categoryIds, function ($query) use ($categoryIds) {
+                return $query->whereIn('id', $categoryIds);
+            })
+            ->groupBy('categories.id', 'categories.title', 'categories.slug')
             ->inRandomOrder()
+            ->orderByRaw('COUNT(articles.id) DESC')
+            ->select(['categories.id', 'categories.title', 'categories.slug'])
             ->first();
     }
 
