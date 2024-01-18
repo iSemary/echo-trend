@@ -120,7 +120,7 @@ class NewsDataIO extends ProviderAbstractor {
                     );
 
                     Article::updateOrCreate([
-                        'slug' => Str::slug($article['title'])
+                        'slug' => Str::slug(substr($article['title'], 0, 100))
                     ], [
                         'title' => $article['title'],
                         'author_id' => $author->id,
