@@ -37,7 +37,7 @@ class ArticleController extends ApiController {
     public function show(string $sourceSlug, string $articleSlug): JsonResponse {
         $user = $this->getAuthenticatedUser();
         // Get article by source slug
-        $article = Article::withArticleRelations()->bySourceAndArticleSlug($sourceSlug, $articleSlug)->first();
+        $article = Article::bySourceAndArticleSlug($sourceSlug, $articleSlug)->withArticleRelations()->first();
         if (!$article) {
             return $this->return(404, "Article not found");
         }
