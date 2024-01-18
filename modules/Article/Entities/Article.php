@@ -157,7 +157,7 @@ class Article extends Model {
     public static function getPreferredSourceArticles(int $userId): ArticlesCollection {
         $sourceIds = UserInterest::getItemIds($userId, UserInterestTypes::SOURCE);
         $sourceArticles = Article::with(['language', 'country', 'source', 'author', 'category', 'provider'])
-            ->whereIn("id", $sourceIds)
+            ->whereIn("articles.source_id", $sourceIds)
             ->orderByDesc("published_at")
             ->limit(8)
             ->get();
@@ -176,10 +176,10 @@ class Article extends Model {
      */
     public static function getPreferredCategoryArticles(int $userId): ArticlesCollection {
         $categoryIds = UserInterest::getItemIds($userId, UserInterestTypes::CATEGORY);
-        $categoryArticles = Article::with(['language', 'country', 'source', 'author', 'category', 'provider'])
-            ->whereIn("id", $categoryIds)
+        $categoryArticles = Article::withArticleRelations()
+            ->whereIn("articles.category_id", $categoryIds)
             ->orderByDesc("published_at")
-            ->limit(8)
+            ->limit(9)
             ->get();
 
         return ArticlesResource::collection($categoryArticles);
@@ -196,10 +196,10 @@ class Article extends Model {
      */
     public static function getPreferredAuthorArticles(int $userId): ArticlesCollection {
         $authorIds = UserInterest::getItemIds($userId, UserInterestTypes::AUTHOR);
-        $authorArticles = Article::with(['language', 'country', 'source', 'author', 'category', 'provider'])
-            ->whereIn("author_id", $authorIds)
+        $authorArticles = Article::withArticleRelations()
+            ->whereIn("articles.author_id", $authorIds)
             ->orderByDesc("published_at")
-            ->limit(8)
+            ->limit(9)
             ->get();
 
         return ArticlesResource::collection($authorArticles);

@@ -126,12 +126,12 @@ class HomeController extends ApiController {
 
         return Category::leftJoin('articles', 'categories.id', '=', 'articles.category_id')
             ->when($categoryIds, function ($query) use ($categoryIds) {
-                return $query->whereIn('id', $categoryIds);
+                return $query->whereIn('categories.id', $categoryIds);
             })
+            ->select(['categories.id', 'categories.title', 'categories.slug'])
             ->groupBy('categories.id', 'categories.title', 'categories.slug')
             ->inRandomOrder()
             ->orderByRaw('COUNT(articles.id) DESC')
-            ->select(['categories.id', 'categories.title', 'categories.slug'])
             ->first();
     }
 
