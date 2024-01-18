@@ -162,7 +162,7 @@ class NewsAPI extends ProviderAbstractor {
                         'category_id' => $source->category_id,
                         'language_id' => $source->language_id,
                         'country_id' => $source->country_id,
-                        'description' => $article['description'],
+                        'description' => $article['description'] ?? "",
                         'body' => $article['content'] ?? '-',
                         'is_head' => $heading,
                         'reference_url' => $article['url'],
