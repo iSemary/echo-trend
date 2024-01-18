@@ -99,7 +99,7 @@ class NewsAPI extends ProviderAbstractor {
             if ($response->successful()) {
                 $data = $response->json();
                 $fetchedArticles = $data['articles'];
-                $fetchedArticles = $data['source'] = $source;
+                $fetchedArticles['source'] = $source;
                 $this->createOrUpdateArticles($fetchedArticles, false);
             } else {
                 $errorCode = $response->status();
@@ -137,7 +137,7 @@ class NewsAPI extends ProviderAbstractor {
     }
 
     protected function createOrUpdateArticles(array $articles, bool $heading): void {
-        
+
         if (isset($articles) && is_array($articles) && count($articles)) {
             foreach ($articles as $article) {
                 $source = isset($articles['source']) ? $articles['source'] : Source::where("slug", $article['source']['id'])->where("provider_id", $this->provider->id)->first();
