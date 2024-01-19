@@ -1,5 +1,8 @@
 # echo-trend
 
+Live Preview: (https://echo-trend.abdelrahman.online)
+Snapshots (https://www.figma.com/community/file/1329896433155296655/echotrend)
+
 -   [About](#about)
 -   [Please Read This](#please-read-this)
 -   [Features](#features)
