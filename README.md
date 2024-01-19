@@ -1,6 +1,7 @@
 # echo-trend
 
 -   [About](#about)
+-   [Please Read This](#please-read-this)
 -   [Features](#features)
 -   [Get Started](#get-started)
     -   [Postman Collection](#postman-collection)
@@ -12,6 +13,18 @@
 ## About
 
 Full-stack web application built with PHP Laravel on the backend and React on the frontend. It provides a personalized news feeds, and engaging features.
+
+## Please read this
+
+Unfortunately, due to the limited time frame, I had to prioritize certain aspects of the task. However, I want to assure you that I am fully aware of the importance of these points:
+
+- Using Redux to avoid code duplicates and manage the states
+- Using Elasticsearch for better optimization in the search feature
+- Write tests using PHPUnit
+
+In future projects or discussions, I would be more than willing to elaborate on these points and provide additional insights. I am confident that with more time, I could have made valuable contributions in these areas.
+
+Thank you for understanding, and I looking forward to hear your feedback!
 
 ## Features
 
@@ -81,13 +94,14 @@ Full-stack web application built with PHP Laravel on the backend and React on th
 
     npm run build
 
-
 ## Docker
 
 ```
 docker-compose up
 ```
+
 OR
+
 ```
 ./vendor/bin/sail up
 
