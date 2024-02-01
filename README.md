@@ -2,7 +2,9 @@
 
 Live Preview: (https://echo-trend.abdelrahman.online)
 
-Snapshots (https://www.figma.com/community/file/1329896433155296655/echotrend)
+Snapshots: (https://www.figma.com/community/file/1329896433155296655/echotrend)
+
+Data Sources: NewsAPI - NewsAPIAi - NewsDataIO
 
 -   [About](#about)
 -   [Features](#features)
